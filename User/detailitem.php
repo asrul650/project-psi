@@ -33,6 +33,27 @@ if ($res2) {
     while ($row = $res2->fetch_assoc()) $components[] = $row;
 }
 $stmt2->close();
+
+$img = $item['image_path'] ?? '';
+if ($img && strpos($img, '../') !== 0) $img = '../' . $img;
+
+// Fungsi rekursif untuk mengambil tree resep
+function getRecipeTree($conn, $item_id) {
+    $stmt = $conn->prepare('SELECT i.id, i.name, i.image_path FROM item_recipes ir JOIN items i ON ir.component_item_id=i.id WHERE ir.item_id=?');
+    $stmt->bind_param('i', $item_id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $tree = [];
+    if ($res) {
+        while ($row = $res->fetch_assoc()) {
+            $row['components'] = getRecipeTree($conn, $row['id']);
+            $tree[] = $row;
+        }
+    }
+    $stmt->close();
+    return $tree;
+}
+$recipe_tree = getRecipeTree($conn, $id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,6 +85,7 @@ $stmt2->close();
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+            margin-bottom: 18px;
         }
         .item-image img {
             width: 100px;
@@ -78,36 +100,79 @@ $stmt2->close();
             font-size: 2.3rem;
             margin-bottom: 10px;
         }
-        .item-recipe {
-            margin-top: 30px;
-        }
-        .item-recipe-title {
-            color: #00bfff;
-            font-size: 1.2rem;
+        .item-attr {
+            color: #fff;
+            font-size: 1.1rem;
             margin-bottom: 10px;
         }
-        .item-recipe-list {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
+        .item-desc {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 10px;
         }
-        .item-recipe-list .recipe-item {
+        .item-recipe-tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #181c23;
+            border-radius: 16px;
+            padding: 24px 18px 18px 18px;
+            min-width: 320px;
+            max-width: 350px;
+            margin-left: auto;
+            box-shadow: 0 0 0 2px #232b4a;
+        }
+        .tree-level {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 18px;
+            position: relative;
+        }
+        .tree-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             background: #232b4a;
-            border-radius: 8px;
-            padding: 10px 14px;
+            border-radius: 50%;
+            padding: 10px;
+            width: 90px;
+            height: 90px;
+            box-shadow: 0 2px 8px #0003;
+            position: relative;
+            margin: 0 10px;
         }
-        .item-recipe-list .recipe-item img {
-            width: 48px;
-            height: 48px;
-            border-radius: 8px;
-            margin-bottom: 6px;
+        .tree-item img {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            margin-bottom: 4px;
+            display: block;
         }
-        .item-recipe-list .recipe-item span {
+        .tree-item span {
             color: #fff;
-            font-size: 0.95rem;
+            font-size: 0.98rem;
+            text-align: center;
+            margin-top: 2px;
+            word-break: break-word;
+            max-width: 80px;
+            white-space: normal;
+            line-height: 1.1;
+            display: block;
+        }
+        .tree-connector {
+            width: 2px;
+            height: 18px;
+            background: #00bfff;
+            margin: 0 auto;
+        }
+        .item-recipe-title {
+            color: #ffe600;
+            font-size: 1.3rem;
+            margin-bottom: 18px;
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -131,29 +196,43 @@ $stmt2->close();
     </header>
     <main>
     <div class="item-detail-section">
-        <div class="item-image">
-            <img src="<?php echo htmlspecialchars($item['image_path']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
-        </div>
-        <div class="item-info">
+        <div style="flex:1;max-width:420px;">
+            <div class="item-image">
+                <img src="<?php echo htmlspecialchars($img ?: '../images/wallpaper.jpg'); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
+            </div>
             <h2><?php echo htmlspecialchars($item['name']); ?></h2>
-            <div style="color:#fff; margin-bottom:12px; white-space:pre-line;">
-                <?php echo nl2br(htmlspecialchars($item['description'])); ?>
-            </div>
-            <div class="item-recipe">
-                <div class="item-recipe-title">Resep Item</div>
-                <div class="item-recipe-list">
-                    <?php if (empty($components)): ?>
-                        <span style="color:#ffb300;">Tidak ada komponen resep.</span>
-                    <?php else: ?>
-                        <?php foreach ($components as $c): ?>
-                            <div class="recipe-item">
-                                <img src="<?php echo htmlspecialchars($c['image_path'] ?: '../images/wallpaper.jpg'); ?>" alt="<?php echo htmlspecialchars($c['name']); ?>">
-                                <span><?php echo htmlspecialchars($c['name']); ?></span>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </div>
-            </div>
+            <div class="item-attr"><?php echo isset($item['attr']) ? htmlspecialchars($item['attr']) : ''; ?></div>
+            <div class="item-desc"><?php echo nl2br(htmlspecialchars($item['description'])); ?></div>
+        </div>
+        <div class="item-recipe-tree">
+            <div class="item-recipe-title">RECIPE</div>
+            <?php
+            // Fungsi bantu untuk render tree bertingkat
+            function renderRecipeTree($item, $level = 0) {
+                $img = $item['image_path'] ?? '';
+                if ($img && strpos($img, '../') !== 0) $img = '../' . $img;
+                echo '<div class="tree-level">';
+                echo '<div class="tree-item">';
+                echo '<img src="' . htmlspecialchars($img ?: '../images/wallpaper.jpg') . '" alt="' . htmlspecialchars($item['name']) . '"><span>' . htmlspecialchars($item['name']) . '</span>';
+                echo '</div>';
+                echo '</div>';
+                if (!empty($item['components'])) {
+                    echo '<div class="tree-connector"></div>';
+                    echo '<div class="tree-level">';
+                    foreach ($item['components'] as $c) {
+                        renderRecipeTree($c, $level + 1);
+                    }
+                    echo '</div>';
+                }
+            }
+            // Render tree mulai dari item utama
+            $main_item = [
+                'name' => $item['name'],
+                'image_path' => $item['image_path'],
+                'components' => $recipe_tree
+            ];
+            renderRecipeTree($main_item);
+            ?>
         </div>
     </div>
     </main>

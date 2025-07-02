@@ -62,7 +62,149 @@ $hero_details = [
                 ],
                 'desc' => 'Mulai dengan Tidal Strike, lalu Tsunami Slam, Wavebreaker, dan Basic Attack.'
             ]
-        ]
+        ],
+        'youtube' => 'https://youtu.be/iPMNdmB3omk',
+    ],
+    'Benedetta' => [
+        'description' => 'Petarung wanita yang melindungi Barren Lands dari invasi iblis. Benedetta adalah Assassin/Fighter dengan mobilitas tinggi dan burst damage mematikan, sangat efektif untuk pick-off dan outplay lawan.',
+        'skills' => [
+            [
+                'name' => 'Elapsed Daytime (Passive)',
+                'icon' => '../images/HERO/Assassin/Benedetta/Elapsed Daytime.png',
+                'desc' => 'Saat menahan tombol <b>Basic Attack</b>, Benedetta memasuki Mode Swordout dan terus mengumpulkan Sword Intent. Jika tombol <b>Basic Attack</b> dilepas setelah Sword Intent terisi penuh, Benedetta akan menggunakan Swordout Slash ke arah di depannya dan berlari ke depan, memberikan <span style="color:#ffc107">(+215% Total Physical Attack)</span> <span style="color:#ff4444">Physical Damage</span> ke lawan di jalurnya (dianggap sebagai Damage Skill dan berkurang menjadi 50% pada Minion dan Creep).<br><br>Benedetta hanya dapat menggunakan Swordout Slash saat Sword Intent terisi penuh dan dia memasuki Mode Swordout dengan menahan tombol <b>Basic Attack</b>.<br>Benedetta juga dapat memperoleh Sword Intent dengan memberikan Damage melalui Basic Attack dan Skill.'
+            ],
+            [
+                'name' => 'Phantom Slash',
+                'icon' => '../images/HERO/Assassin/Benedetta/Phantom Slash.png',
+                'desc' => 'Benedetta mundur dengan cepat dan meninggalkan bayangan di depan. Setelah jeda singkat, bayangannya menebas ke depan dalam area berbentuk kipas, memberikan 200 <span style="color:#ffc107">(+75% Total Physical Attack)</span> <span style="color:#ff4444">Physical Damage</span> dan menyebabkan 60% Slow kepada lawan selama 0.5 detik.<br><br>Sementara itu, Benedetta berlari ke depan untuk menebas, memberikan 75 <span style="color:#ffc107">(+100% Total Physical Attack)</span> <span style="color:#ff4444">Physical Damage</span>. (Jika target terkena Hit oleh bayangannya, Damage yang diberikan Benedetta akan meningkat menjadi 200%).'
+            ],
+            [
+                'name' => 'An Eye for An Eye',
+                'icon' => '../images/HERO/Assassin/Benedetta/An Eye for An Eye.png',
+                'desc' => 'Benedetta mengangkat senjatanya untuk bertahan, menjadi Kebal terhadap Crowd Control dan memblokir semua Damage selama 0.8 detik. Setelah ini, dia menyerang ke arah target, memberikan 300 <span style="color:#ffc107">(+80% Total Physical Attack)</span> <span style="color:#ff4444">Physical Damage</span>.<br><br>Jika Benedetta berhasil menghindari Damage selama bertahan, dia akan memperoleh Sword Intent penuh. Jika dia berhasil menghindari Crowd Control apa pun, serangan berikutnya akan menyebabkan Stun ke target selama 1.5 detik.'
+            ],
+            [
+                'name' => 'Alecto: Final Blow (Ultimate)',
+                'icon' => '../images/HERO/Assassin/Benedetta/Alecto Final Blow.png',
+                'desc' => 'Benedetta menggenggam Alecto, bergerak ke depan (Benedetta tidak dapat ditargetkan saat bergerak), dan menebas setelah jeda singkat, meledakkan Sword Intent di jalurnya. Selama 2.5 detik, Sword Intent memberikan hingga total 1560 <span style="color:#ffc107">(+1105% Extra Physical Attack)</span> <span style="color:#ff4444">Physical Damage</span> ke lawan dan menyebabkan 50% Slow ke lawan di dalamnya.'
+            ]
+        ],
+        'skill_priority' => 'Tingkatkan Skill 1 di Level 1 dan prioritaskan meningkatkan Skill 1 dengan Skill 2 sebagai cadangan. Tingkatkan Ultimate kapan pun tersedia.',
+        'combos' => [
+            [
+                'title' => 'Kombo Team Fight',
+                'sequence' => [
+                    '../images/HERO/Assassin/Benedetta/Basic Attack.png',
+                    '../images/HERO/Assassin/Benedetta/Alecto Final Blow.png',
+                    '../images/HERO/Assassin/Benedetta/Phantom Slash.png',
+                    '../images/HERO/Assassin/Benedetta/An Eye for An Eye.png'
+                ],
+                'desc' => 'Saat Team Fight, gunakan Swordout Slash untuk mendekati lawan, lalu gunakan Ultimate Benedetta saat lawan terkepung, dan lanjutkan dengan Skill 1 untuk Damage tambahan dan Skill 2 untuk menahan efek CC.'
+            ],
+            [
+                'title' => 'Kombo Laning',
+                'sequence' => [
+                    '../images/HERO/Assassin/Benedetta/Basic Attack.png',
+                    '../images/HERO/Assassin/Benedetta/Phantom Slash.png',
+                    '../images/HERO/Assassin/Benedetta/Alecto Final Blow.png',
+                    '../images/HERO/Assassin/Benedetta/Basic Attack.png'
+                ],
+                'desc' => 'Saat fase Laning, kumpulkan Sword Intent dengan menahan tombol Basic Attack, lalu gunakan Swordout Slash setelah Sword Intent penuh untuk menyerang lawan. Lanjutkan dengan Skill 1 dan coba isi Sword Intent hingga penuh kembali dengan menghalangi serangan lawan dengan Skill 2, lalu akhiri kombo dengan Swordout Slash lagi.'
+            ]
+        ],
+        'youtube' => 'https://youtu.be/FCahwmv4HF0',
+    ],
+    'Diggie' => [
+        'description' => 'Ilmuwan burung hantu yang bisa mengendalikan waktu. Diggie adalah Support yang sangat kuat dalam memberikan perlindungan dan crowd control untuk timnya.',
+        'skills' => [
+            [
+                'name' => 'Young Again (Passive)',
+                'icon' => '../images/HERO/Support/Diggie/Young Again.png',
+                'desc' => 'Setelah tereliminasi, Diggie memutar ulang waktu dan kembali menjadi telur, dia dapat bergerak dan memperoleh Skill baru. Diggie tidak dapat ditargetkan di wujud telur dan akan bangkit kembali setelah beberapa waktu.'
+            ],
+            [
+                'name' => 'Auto Alarm Bomb',
+                'icon' => '../images/HERO/Support/Diggie/Auto Alarm Bomb.png',
+                'desc' => 'Diggie melemparkan Owl Alarm ke lokasi target yang tetap diam selama 25 detik atau hingga bereaksi terhadap lawan pertama di sekitar, mengejarnya dan meledak saat mengenainya. Ledakan memberikan 350 <span style="color:#00e5ff">(+100% Total Magic Power)</span> <span style="color:#b388ff">Magic Damage</span> ke lawan di sekitar dan menyebabkan 30% Slow.<br><br>Diggie memperoleh 2 Stack <span style="color:#ffb300">Dangerous Sparks</span> setiap kali Hero lawan terkena ledakan (hingga 60 Stack), setiap Stack meningkatkan Damage Skill sebesar 1%. Diggie kehilangan setengah dari Stack saat tereliminasi, tetapi akan mendapatkan 1 Stack <span style="color:#ffb300">Dangerous Sparks</span> setiap kali Skill-nya mengenai Hero lawan saat dalam Mode Egg.<br><br>Hingga 5 Owl Alarm dapat muncul pada waktu bersamaan.'
+            ],
+            [
+                'name' => 'Reverse Time',
+                'icon' => '../images/HERO/Support/Diggie/Reverse Time.png',
+                'desc' => 'Diggie meninggalkan Mark ke Hero yang ditargetkan selama 4 detik dan target akan ditarik kembali ke lokasi sebelumnya setelah durasi berakhir, memberikan 150 <span style="color:#00e5ff">(+100% Total Magic Power)</span> <span style="color:#b388ff">Magic Damage</span> dan terkena efek Slow sebesar 80%.<br><br>Jika lawan keluar dari lingkaran, tarikan akan aktif lebih awal.'
+            ],
+            [
+                'name' => 'Time Journey (Ultimate)',
+                'icon' => '../images/HERO/Support/Diggie/Time Journey.png',
+                'desc' => 'Diggie menghapus semua Debuff ke Hero satu tim di sekitar (termasuk dirinya) dan memberikan Shield 650 <span style="color:#00e5ff">(+300% Total Magic Power)</span> serta menjadi Kebal terhadap Crowd Control selama 2 detik. Dia juga memperoleh 50% Movement Speed tambahan selama 0.5 detik.'
+            ]
+        ],
+        'skill_priority' => 'Tingkatkan Skill 1 di Level 1 dan prioritaskan meningkatkan Skill 1 dengan Skill 2 sebagai cadangan. Tingkatkan Ultimate kapan pun tersedia.',
+        'combos' => [
+            [
+                'title' => 'Kombo Team Fight',
+                'sequence' => [
+                    '../images/HERO/Support/Diggie/Auto Alarm Bomb.png',
+                    '../images/HERO/Support/Diggie/Reverse Time.png',
+                    '../images/HERO/Support/Diggie/Time Journey.png'
+                ],
+                'desc' => 'Saat Team Fight, gunakan Skill 1 untuk mengganggu lawan. Jika lawan mencoba menginisiasi, tarik mereka kembali dengan Skill 2. Jika rekan tim terkena Crowd Control atau menerima banyak Damage, gunakan Ultimate untuk menyelamatkan mereka.'
+            ],
+            [
+                'title' => 'Kombo Laning',
+                'sequence' => [
+                    '../images/HERO/Support/Diggie/Reverse Time.png',
+                    '../images/HERO/Support/Diggie/Auto Alarm Bomb.png'
+                ],
+                'desc' => 'Saat fase Laning, gunakan Skill 2 untuk menahan lawan di lokasi mereka, lalu lemparkan alarm dengan Skill 1.'
+            ]
+        ],
+        'youtube' => 'https://youtu.be/Jhs78OEHwy8',
+    ],
+    'Joy' => [
+        'description' => 'Si "Anak Ajaib" yang kembali ke Leonin setelah bertahun-tahun mengembara.',
+        'skills' => [
+            [
+                'name' => 'Humph, Joy\'s Angry!',
+                'icon' => '../images/HERO/Assassin/Joy/humph Joy\'s Angry.png',
+                'desc' => 'Joy memasuki Mode Angry! setiap kali Skill-nya mengenai lawan non-Minion, memberikan 100 <span style="color:#00e5ff">(+80% Total Magic Power)</span> <span style="color:#b388ff">Magic Damage</span> dan meningkatkan 60% Movement Speed yang berkurang seiring waktu selama 4 detik (terkena Leonin Crystal juga akan memberikan efek Movement Speed). Efek ini memiliki Cooldown selama 4 detik untuk setiap target.<br><br>Basic Attack Joy akan memberikan 65 <span style="color:#ffc107">(+65% Total Physical Attack)</span> <span style="color:#00e5ff">(+65% Total Magic Power)</span> <span style="color:#b388ff">Magic Damage</span>.'
+            ],
+            [
+                'name' => 'Look, Leonin Crystal!',
+                'icon' => '../images/HERO/Assassin/Joy/Look Leonin Crystal.png',
+                'desc' => 'Joy memanggil Leonin Crystal ke lokasi target, memberikan 200 <span style="color:#00e5ff">(+40% Total Magic Power)</span> <span style="color:#b388ff">Magic Damage</span> ke lawan di sekitar dan menyebabkan 30% Slow ke mereka selama 1 detik. Leonin Crystal berlangsung hingga selama 2 detik.'
+            ],
+            [
+                'name' => 'Meow, Rhythm of Joy!',
+                'icon' => '../images/HERO/Assassin/Joy/Meow Rhythm of Joy.png',
+                'desc' => 'Joy bergerak ke arah target, memberikan 120 <span style="color:#00e5ff">(+55% Total Magic Power)</span> <span style="color:#b388ff">Magic Damage</span> ke lawan di jalurnya. Mengenai lawan atau <span style="color:#ffd600">Leonin Crystal</span> membuat Joy dapat menggunakan kembali Skill-nya dalam 0.8 detik dan mendapatkan 1 Beat Energy. Menggunakan Skill ini sesuai ketukan akan meningkatkan 100% Damage Skill dan memberikan 80 <span style="color:#00e5ff">(+60% Total Magic Power)</span> Shield yang bertahan selama 3 detik.<br><br>Skill ini dapat digunakan hingga 4 kali berturut-turut.'
+            ],
+            [
+                'name' => 'Ha, Electrifying Beats!',
+                'icon' => '../images/HERO/Assassin/Joy/Ha Electrifying Beast.png',
+                'desc' => 'Joy meningkatkan 15 <span style="color:#00e5ff">(+10% Total Magic Power)</span> Physical & Magic Defense serta memperoleh 30% Movement Speed. Selama 3 detik berikutnya, dia berdentum 8 kali, memberikan 120 <span style="color:#00e5ff">(+40% Total Magic Power)</span> <span style="color:#b388ff">Magic Damage</span> setiap berdentum ke lawan di sekitar.<br><br>Setiap <span style="color:#ffd600">Meow, Rhythm of Joy!</span> digunakan sesuai ketukan meningkatkan 40% Damage Skill ini. Jika ritme sempurna tercapai dengan mengenai setiap ketukan dengan <span style="color:#ffd600">Meow, Rhythm of Joy!</span>, Joy juga memperoleh 40% Spell Vamp saat Skill ini aktif.<br><br>Skill ini terbuka saat Joy memperoleh Beat Energy. Menggunakan Skill ini dengan 3 Beat Energy akan menghapus semua Debuff pada Joy dan membuatnya kebal Slow selama Skill ini aktif.'
+            ]
+        ],
+        'skill_priority' => 'Tingkatkan Skill 2 di Level 1 dan prioritaskan meningkatkan Skill 2 dengan Skill 1 sebagai cadangan. Tingkatkan Ultimate kapan pun tersedia.',
+        'combos' => [
+            [
+                'title' => 'Kombo Team Fight',
+                'sequence' => [
+                    '../images/HERO/Assassin/Joy/Look Leonin Crystal.png',
+                    '../images/HERO/Assassin/Joy/Meow Rhythm of Joy.png',
+                    '../images/HERO/Assassin/Joy/Ha Electrifying Beast.png'
+                ],
+                'desc' => 'Di Team Fight, panggil Leonin Crystal dengan Skill 1 dan gunakan sebagai pijakan Skill 2 untuk memasuki pertarungan. Terus gunakan Skill 2 sesuai ketukan untuk membuka Ultimate. Terakhir, gunakan Ultimate untuk mengeliminasi lawan.'
+            ],
+            [
+                'title' => 'Kombo Laning',
+                'sequence' => [
+                    '../images/HERO/Assassin/Joy/Look Leonin Crystal.png',
+                    '../images/HERO/Assassin/Joy/Meow Rhythm of Joy.png'
+                ],
+                'desc' => 'Di fase Laning, letakkan Skill 1 di atas lawan, lalu gunakan Skill 2 untuk bergerak melewati kedua target dan terus gunakan Skill 2 sesuai ketukan untuk menghasilkan Damage.'
+            ]
+        ],
+        'youtube' => 'https://youtu.be/HNvtvhygKTY',
     ],
     // Tambahkan hero lain jika perlu
 ];
@@ -207,43 +349,54 @@ while ($row = $countered_result->fetch_assoc()) {
             margin-top: 0;
         }
         .hero-detail-card {
-            background: #232b4a;
+            position: relative;
+            background: none;
             color: #fff;
-            border-radius: 12px;
+            border-radius: 18px;
             overflow: hidden;
             width: 100%;
             max-width: 320px;
             margin: 0 auto 24px auto;
             font-family: 'Poppins', sans-serif;
-            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.12);
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.18);
             display: flex;
             flex-direction: column;
+            min-height: 420px;
         }
-        .hero-image-container {
-            position: relative;
-            width: 100%;
-            height: 220px;
-            overflow: hidden;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-        }
-        .hero-image {
+        .hero-bg-image {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            object-position: center center;
+            z-index: 1;
+            filter: brightness(0.7) blur(1.5px);
+            transition: filter 0.2s;
+        }
+        .hero-card-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, rgba(20,24,40,0.55) 60%, rgba(20,24,40,0.85) 100%);
+            z-index: 2;
+            backdrop-filter: blur(2.5px);
         }
         .hero-info {
-            padding: 16px 14px 18px 14px;
+            position: relative;
+            z-index: 3;
+            padding: 32px 18px 22px 18px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: 100%;
+            justify-content: flex-end;
         }
         .hero-name {
             margin: 12px 0 4px 0;
             font-size: 1.6em;
             font-weight: 600;
             text-align: center;
+            text-shadow: 0 2px 8px #000a;
         }
         .hero-roles-icon {
             display: flex;
@@ -292,12 +445,38 @@ while ($row = $countered_result->fetch_assoc()) {
             font-size: 1.15em;
             font-weight: 600;
             display: block;
+            text-shadow: 0 2px 8px #000a;
         }
         .stat-label {
             display: block;
             color: #b0b8d0;
             font-size: 0.92em;
             margin-top: 2px;
+            text-shadow: 0 2px 8px #000a;
+        }
+        .hero-section-title {
+            color: #b0d0ff;
+            font-size: 1.1em;
+            margin: 10px 0 2px 0;
+            text-align: center;
+            text-shadow: 0 2px 8px #000a;
+        }
+        .hero-desc {
+            color: #e0e6f7;
+            font-size: 1em;
+            margin-top: 18px;
+            background: rgba(20,24,40,0.55);
+            border-radius: 12px;
+            padding: 16px 14px;
+            text-align: center;
+            box-shadow: 0 2px 8px #0003;
+            text-shadow: 0 2px 8px #000a;
+            min-height: 80px;
+            max-width: 95%;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         @media (max-width: 600px) {
             .hero-detail-card {
@@ -381,9 +560,8 @@ while ($row = $countered_result->fetch_assoc()) {
         <div class="detail-hero-container">
             <div class="detail-hero-left">
                 <div class="hero-detail-card">
-                  <div class="hero-image-container">
-                    <img src="../<?php echo htmlspecialchars($hero['image_path']); ?>" alt="<?php echo htmlspecialchars($hero['name']); ?>" class="hero-image">
-                  </div>
+                  <img src="../<?php echo htmlspecialchars($hero['image_path']); ?>" alt="<?php echo htmlspecialchars($hero['name']); ?>" class="hero-bg-image">
+                  <div class="hero-card-overlay"></div>
                   <div class="hero-info">
                     <h2 class="hero-name"><?php echo htmlspecialchars($hero['name']); ?></h2>
                     <div class="hero-roles-icon">
@@ -502,9 +680,10 @@ while ($row = $countered_result->fetch_assoc()) {
                     </div>
                 </div>
                 <div id="panduan-content" class="skill-content" style="display:none;">
-                    <div class="youtube-guide-card" onclick="window.open('https://youtu.be/iPMNdmB3omk','_blank')" style="cursor:pointer;max-width:420px;margin:32px auto 0 auto;box-shadow:0 4px 24px rgba(0,0,0,0.18);border-radius:16px;overflow:hidden;background:#181c23;transition:box-shadow 0.2s;">
+                    <?php if (isset($hero_details[$hero['name']]['youtube'])): ?>
+                    <div class="youtube-guide-card" onclick="window.open('<?php echo $hero_details[$hero['name']]['youtube']; ?>','_blank')" style="cursor:pointer;max-width:420px;margin:32px auto 0 auto;box-shadow:0 4px 24px rgba(0,0,0,0.18);border-radius:16px;overflow:hidden;background:#181c23;transition:box-shadow 0.2s;">
                         <div style="position:relative;">
-                            <img src="https://img.youtube.com/vi/iPMNdmB3omk/hqdefault.jpg" alt="Panduan Video" style="width:100%;display:block;">
+                            <img src="https://img.youtube.com/vi/<?php echo preg_replace('/.*v=|.*be\//','',$hero_details[$hero['name']]['youtube']); ?>/hqdefault.jpg" alt="Panduan Video" style="width:100%;display:block;">
                             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.6);border-radius:50%;padding:18px 20px;">
                                 <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#fff" fill-opacity="0.7"/><polygon points="20,16 36,24 20,32" fill="#e53935"/></svg>
                             </div>
@@ -514,6 +693,9 @@ while ($row = $countered_result->fetch_assoc()) {
                             <div style="color:#b0b8d0;font-size:0.98em;">Klik untuk menonton panduan di YouTube</div>
                         </div>
                     </div>
+                    <?php else: ?>
+                    <div style="text-align:center;color:#b0b8d0;margin-top:32px;">Panduan video belum tersedia untuk hero ini.</div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

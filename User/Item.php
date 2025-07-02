@@ -8,8 +8,10 @@ require_once '../includes/db_connect.php';
 // Ambil kategori unik dari database
 $categories = [];
 $res = $conn->query('SELECT DISTINCT category FROM items ORDER BY category ASC');
-while ($row = $res && $res->fetch_assoc()) {
-    if ($row['category']) $categories[] = $row['category'];
+if ($res) {
+    while ($row = $res->fetch_assoc()) {
+        if ($row['category']) $categories[] = $row['category'];
+    }
 }
 // Ambil filter kategori dari GET
 $filter = isset($_GET['category']) ? $_GET['category'] : '';
@@ -20,11 +22,15 @@ if ($filter && in_array($filter, $categories)) {
     $stmt->bind_param('s', $filter);
     $stmt->execute();
     $result = $stmt->get_result();
-    while ($row = $result && $row->fetch_assoc()) $items[] = $row;
+    if ($result) {
+        while ($row = $result->fetch_assoc()) $items[] = $row;
+    }
     $stmt->close();
 } else {
     $res2 = $conn->query('SELECT * FROM items ORDER BY id ASC');
-    while ($row = $res2 && $res2->fetch_assoc()) $items[] = $row;
+    if ($res2) {
+        while ($row = $res2->fetch_assoc()) $items[] = $row;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -335,9 +341,13 @@ if ($filter && in_array($filter, $categories)) {
             </div>
             <div class="item-grid" id="item-grid">
                 <?php foreach ($items as $item): ?>
+                    <?php
+                    $img = $item['image_path'] ?? '';
+                    if ($img && strpos($img, '../') !== 0) $img = '../' . $img;
+                    ?>
                     <a href="detailitem.php?id=<?php echo $item['id']; ?>" class="item-card">
                         <div class="item-card-img">
-                            <img src="<?php echo htmlspecialchars($item['image_path'] ?: '../images/wallpaper.jpg'); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
+                            <img src="<?php echo htmlspecialchars($img ?: '../images/wallpaper.jpg'); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
                         </div>
                         <div class="item-card-name"><?php echo htmlspecialchars($item['name']); ?></div>
                     </a>
