@@ -1,0 +1,3 @@
++60 Serangan Adaptif
++15 Kecepatan Gerakan
+Pasif Unik - Lethality: Setelah memberikan kerusakan pada hero musuh, mengeksekusi hero tersebut jika HP mereka lebih rendah dari 4%. Mendapatkan 10 tumpukan Lethality untuk setiap pembunuhan dan kehilangan 30% tumpukan saat ini untuk setiap kematian. Setiap tumpukan Lethality meningkatkan ambang batas HP efek eksekusi sebesar 0,1%, menumpuk hingga 80 kali.

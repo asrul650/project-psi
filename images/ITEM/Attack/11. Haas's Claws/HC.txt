@@ -1,0 +1,5 @@
++40 Serangan Fisik
++15% Kecepatan Serangan
++20% Peluang Kritis
+Atribut Unik: +20% Lifesteal
+Pasif Unik - Frenzy: Serangan kritis memberikan 20% Kecepatan Serangan ekstra selama 2 detik.

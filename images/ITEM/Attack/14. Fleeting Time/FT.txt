@@ -1,0 +1,4 @@
++30 Serangan Adaptif
++600 HP
++15% Pengurangan Cooldown
+Pasif Unik - Timestream: Pembunuhan atau assist yang dilakukan hero mengurangi cooldown Ultimate saat ini sebesar 30%.

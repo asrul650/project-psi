@@ -1,0 +1,4 @@
++65 Serangan Fisik
++25% Peluang Kritis
+Atribut Unik: +40% Kerusakan Kritis
+Pasif Unik - Doom: Serangan kritis memberikan 5% Serangan Fisik ekstra selama 2 detik.

@@ -1,0 +1,3 @@
++160 Serangan Fisik
++5% Kecepatan Gerak
+Pasif Unik - Despair: Memberikan damage ke musuh non-Minion di bawah 50% HP akan meningkatkan Physical Attack sebesar 25% selama 2 detik (berefek sebelum damage diberikan).

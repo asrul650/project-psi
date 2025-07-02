@@ -1,0 +1,5 @@
++30 Serangan Fisik
++30% Kecepatan Serangan
++5% Kecepatan Gerak
+Pasif Unik - Corrosive: Serangan Dasar memperoleh 80 Physical Damage tambahan dan memperlambat target sebesar 8% (dibagi dua untuk Serangan Dasar jarak jauh) selama 1,5 detik. Dapat ditumpuk hingga 5 kali.
+Pasif Unik - Impulse: Serangan Dasar memberikan 6% Attack Speed ​​tambahan selama 3 detik, dibatasi hingga 5 tumpukan.

@@ -1,0 +1,4 @@
++30 Serangan Fisik
++20% Kecepatan Serangan
++10% Lifesteal
+Aktif Unik - Wind Chant: Menjadi kebal terhadap semua Kerusakan Fisik selama 2 detik (durasi berkurang setengahnya untuk non-Marksmen; cooldown 90 detik).

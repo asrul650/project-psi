@@ -1,0 +1,3 @@
++35 Serangan Fisik
++10% Lifesteal
+Pasif Unik - Lifeline: Saat menerima kerusakan yang mengurangi HP di bawah 30%, memperoleh perisai sebesar 385(+35*Level Hero) (meningkat seiring level) dan Kecepatan Gerakan sebesar 50% yang cepat berkurang selama 3 detik. Efek ini memiliki cooldown selama 60 detik.

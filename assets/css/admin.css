@@ -1,0 +1,418 @@
+/* =================================================================
+   ADMIN PANEL STYLESHEET
+   ================================================================= */
+
+/* General Body & Typography */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    color: #333;
+}
+
+/* --- Login Page Styles --- */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.login-box {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #1c1e21;
+}
+
+.login-box p {
+    margin-bottom: 25px;
+    color: #606770;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #4b4f56;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    padding-right: 40px;
+}
+
+/* Wrapper untuk input password dan ikon */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Styling untuk ikon mata */
+#toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #90949c;
+    transition: color 0.2s;
+}
+
+#toggle-password:hover {
+    color: #4b4f56;
+}
+
+.form-group input:focus {
+    border-color: #1877f2;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+}
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background-color: #1877f2;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #166fe5;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* --- Admin Dashboard Layout --- */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 25px 20px;
+    background-color: #22303f;
+    text-align: center;
+    border-bottom: 1px solid #3a5068;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: 1px;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.sidebar-nav li {
+    padding: 0;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 15px 25px;
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, padding-left 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background-color: #34495e;
+    border-left: 4px solid #3498db;
+}
+
+.sidebar-nav li.active a {
+    background-color: #34495e;
+    font-weight: bold;
+    color: #ffffff;
+    border-left: 4px solid #3498db;
+}
+
+.main-content {
+    flex: 1;
+    background-color: #f0f2f5;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header-title h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.header-title p {
+    margin: 5px 0 0;
+    color: #606770;
+}
+
+.content-body {
+    padding: 30px;
+    flex: 1;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.stat-card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h4 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #4b4f56;
+}
+
+.stat-card .stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1877f2;
+    margin: 10px 0;
+}
+
+.stat-card .card-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: #1877f2;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* --- Tombol Global --- */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-primary {
+    background-color: #1877f2;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #166fe5;
+    transform: translateY(-2px);
+}
+
+.header-actions {
+    margin-left: auto; /* Mendorong tombol ke kanan */
+}
+
+
+/* --- Styling Tabel --- */
+.table-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    overflow-x: auto; /* Untuk responsif di layar kecil */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th, td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+thead th {
+    background-color: #f7f7f7;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #606770;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.table-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
+}
+
+.btn-action {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    margin-right: 5px;
+    transition: background-color 0.2s;
+}
+
+.btn-edit {
+    background-color: #f0ad4e;
+}
+.btn-edit:hover {
+    background-color: #ec971f;
+}
+
+.btn-delete {
+    background-color: #d9534f;
+}
+.btn-delete:hover {
+    background-color: #c9302c;
+}
+
+/* --- Badge Tier --- */
+.tier-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+}
+.tier-ss { background-color: #ff4757; }
+.tier-s { background-color: #ffc048; }
+.tier-a { background-color: #2ed573; }
+.tier-b { background-color: #1e90ff; }
+.tier-c { background-color: #7f8fa6; }
+.tier-d { background-color: #a4b0be; }
+
+/* --- Styling Form --- */
+.form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    max-width: 800px; /* Batasi lebar form */
+    margin: 0 auto; /* Posisikan di tengah */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #4b4f56;
+    margin-bottom: 8px;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+.form-group input[type="file"] {
+    padding: 10px;
+    background-color: #f7f7f7;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus {
+    border-color: #1877f2;
+    outline: none;
+}
+
+.form-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px; /* Jarak antara tombol */
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+} 

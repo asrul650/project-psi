@@ -1,0 +1,4 @@
++80 Serangan Fisik
++10% Pengurangan Cooldown
+Atribut Unik: +15 Penetrasi Fisik
+Pasif Unik - Pembalasan: Memberikan kerusakan pada hero atau creep musuh yang sama 5 kali berturut-turut memberikan 50% Kecepatan Gerakan ekstra yang berkurang selama 3 detik (cooldown 8 detik).

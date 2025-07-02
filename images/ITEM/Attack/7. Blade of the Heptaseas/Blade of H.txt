@@ -1,0 +1,4 @@
++70 Serangan Fisik
++250 HP
+Atribut Unik: +15 Penetrasi Fisik
+Pasif Unik - Ambush: Jika tidak ada kerusakan yang diterima atau diberikan dalam 5 detik (tidak termasuk dari Minion atau Creep), Serangan Dasar berikutnya akan memberikan tambahan 160 (+40% Total Serangan Fisik) Kerusakan Fisik dan memperlambat target sebesar 40% selama 1,5 detik.

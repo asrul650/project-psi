@@ -1,0 +1,4 @@
++55 Serangan Fisik
++15% Kecepatan Serangan
+Pasif Unik - Swift: Setiap 1% Peluang Kritis tambahan yang diperoleh diubah menjadi 1% Kecepatan Serangan tambahan.
+Pasif Unik - Endless Strike: Setelah setiap 2 Serangan Dasar non-Kritis, Kecepatan Serangan dari Serangan Dasar berikutnya meningkat sebesar 80% (dan batas Kecepatan Serangan meningkat menjadi 500%) dan memicu Efek Serangan tambahan 2 kali.

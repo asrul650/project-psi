@@ -1,0 +1,5 @@
++40 Serangan Fisik
++20% Kecepatan Serangan
++10% Lifesteal
+Pasif Unik - Dragon Scale: Setiap 1% Lifesteal meningkatkan Hybrid Defense sebesar 1, hingga 50 (efek dibagi dua untuk hero non-Fighter).
+Pasif Unik - Lifeline: Saat menerima kerusakan yang mengurangi HP di bawah 30%, memperoleh perisai sebesar 770(+70*Level Hero) (meningkat seiring level) dan 50% Movement Speed ​​yang cepat berkurang selama 3 detik. Efek ini memiliki cooldown selama 60 detik.

@@ -1,0 +1,5 @@
++35 Serangan Fisik
++400 HP
++10% Pengurangan Cooldown
++12% Spell Vamp
+Pasif Unik - Fighting Spirit: Serangan memberikan 12 Serangan Fisik ekstra per detik selama 4 detik, hingga 6 tumpukan. Memberikan 10% True Damage ekstra berdasarkan damage yang diberikan (tidak ada pengurangan damage yang dihitung) pada tumpukan penuh. (Marksmen, Mage, dan Support hanya menerima 50% dari efek tumpukan ini.)

@@ -1,0 +1,4 @@
++45 Serangan Adaptif
++400 HP
++5% Pengurangan Cooldown
+Aktif Unik - Beku: Menjadi beku, tidak lagi ditargetkan, dan kebal terhadap kerusakan selama 2 detik (masa pendinginan 100 detik). Tidak dapat bergerak atau mengeluarkan skill saat beku, tetapi skill yang sudah dikeluarkan tidak akan terganggu.

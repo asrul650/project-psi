@@ -1,0 +1,4 @@
++35% Kecepatan Serangan
++20% Peluang Kritis
++20 Kecepatan Gerakan
+Pasif Unik - Typhoon: Setiap 5–2 detik (dikurangi 0,2 detik untuk setiap Serangan Dasar), Serangan Dasar berikutnya akan mengenai hingga 3 unit musuh dan memberikan 150–362 Magic Damage. (Serangan ini dapat memberikan Crit dan damage meningkat hingga 200% terhadap Minion.)

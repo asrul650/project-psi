@@ -1,0 +1,4 @@
++80 Serangan Fisik
++20% Kecepatan Serangan
+Pasif Unik - Lifebane: Memberikan damage ke target akan mengurangi efek Shield dan HP Regen pada mereka hingga 50% dari normal selama 3 detik.
+Pasif Unik - Punish: Meningkatkan damage sebesar 8% terhadap hero musuh dengan HP ekstra yang lebih tinggi.

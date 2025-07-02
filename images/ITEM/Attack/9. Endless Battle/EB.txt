@@ -1,0 +1,8 @@
++60 Serangan Fisik
++250 HP
++10% Pengurangan Cooldown
++8% Hybrid Lifesteal
++5% Kecepatan Gerak
++5 Regen Mana
+Pasif Unik - Divine Justice: Setelah mengeluarkan skill, Basic Attack berikutnya dalam waktu 3 detik memberikan 60% Total Physical Attack tambahan True Damage (1,5 detik cooldown).
+Pasif Unik - Chase Fate: Memicu Divine Justice memberikan 10% tambahan Movement Speed.

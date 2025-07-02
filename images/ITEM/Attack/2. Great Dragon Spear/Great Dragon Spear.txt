@@ -1,0 +1,4 @@
++70 Serangan Fisik
++10% Pengurangan Cooldown
++20% Peluang Kritis
+Pasif Unik - Supreme Warrior: Setelah mengeluarkan Ultimate, tingkatkan Movement Speed ​​sebesar 30% selama 7,5 detik. Efek ini memiliki cooldown selama 15 detik.

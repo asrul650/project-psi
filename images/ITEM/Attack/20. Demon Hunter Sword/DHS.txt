@@ -1,0 +1,5 @@
++35 Serangan Fisik
++20% Kecepatan Serangan
++8% Lifesteal
+Pasif Unik - Engulf: Serangan Dasar memberikan 8% dari HP target saat ini sebagai kerusakan fisik ekstra (dibatasi hingga 60 terhadap minion).
+Pasif Unik - Devour: Serangan Dasar memberikan 2% Lifesteal selama 3 detik (dapat ditumpuk hingga 5 kali).
