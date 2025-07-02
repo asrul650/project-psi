@@ -26,9 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = $_POST['category'];
     $image_path = trim($_POST['image_path']);
     $desc = trim($_POST['description']);
+    $tips = trim($_POST['tips']);
+    $usage_desc = trim($_POST['usage_desc']);
+    $synergy = trim($_POST['synergy']);
+    $counter = trim($_POST['counter']);
+    $recommended_heroes = trim($_POST['recommended_heroes']);
+    $note = trim($_POST['note']);
     if ($name && $category) {
-        $stmt2 = $conn->prepare("UPDATE items SET name=?, image_path=?, description=?, category=? WHERE id=?");
-        $stmt2->bind_param('ssssi', $name, $image_path, $desc, $category, $id);
+        $stmt2 = $conn->prepare("UPDATE items SET name=?, image_path=?, description=?, category=?, tips=?, usage_desc=?, synergy=?, counter=?, recommended_heroes=?, note=? WHERE id=?");
+        $stmt2->bind_param('ssssssssssi', $name, $image_path, $desc, $category, $tips, $usage_desc, $synergy, $counter, $recommended_heroes, $note, $id);
         if ($stmt2->execute()) {
             header('Location: manage_items.php?msg=updated');
             exit();
@@ -89,6 +95,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <label>Deskripsi</label>
                 <textarea name="description"><?php echo htmlspecialchars($item['description']); ?></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tips Singkat (Quote)</label>
+                <textarea name="tips" placeholder="Tips singkat penggunaan item..."><?php echo htmlspecialchars($item['tips']); ?></textarea>
+            </div>
+            <div class="form-group">
+                <label>Penjelasan Penggunaan (Usage Description)</label>
+                <textarea name="usage_desc" placeholder="Penjelasan detail penggunaan item..."><?php echo htmlspecialchars($item['usage_desc']); ?></textarea>
+            </div>
+            <div class="form-group">
+                <label>Item Sinergi (pisahkan dengan koma)</label>
+                <input type="text" name="synergy" value="<?php echo htmlspecialchars($item['synergy']); ?>" placeholder="Wind of Nature, Rose Gold Meteor">
+            </div>
+            <div class="form-group">
+                <label>Item Counter (pisahkan dengan koma)</label>
+                <input type="text" name="counter" value="<?php echo htmlspecialchars($item['counter']); ?>" placeholder="Dominance Ice">
+            </div>
+            <div class="form-group">
+                <label>Hero yang Cocok (pisahkan dengan koma)</label>
+                <input type="text" name="recommended_heroes" value="<?php echo htmlspecialchars($item['recommended_heroes']); ?>" placeholder="Layla, Miya, Hanabi, Aulus, Freya">
+            </div>
+            <div class="form-group">
+                <label>Catatan</label>
+                <textarea name="note" placeholder="Catatan penting..."><?php echo htmlspecialchars($item['note']); ?></textarea>
             </div>
             <button type="submit" class="btn">Update</button>
             <a href="manage_items.php" class="btn btn-cancel">Batal</a>

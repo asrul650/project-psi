@@ -8,13 +8,19 @@ require_once '../includes/db_connect.php';
 $msg = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name']);
-    $type = $_POST['type'];
+    $category = $_POST['category'];
     $image_path = trim($_POST['image_path']);
     $attr = trim($_POST['attr']);
     $desc = trim($_POST['description']);
-    if ($name && $type) {
-        $stmt = $conn->prepare("INSERT INTO items (name, type, image_path, attr, description) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param('sssss', $name, $type, $image_path, $attr, $desc);
+    $tips = trim($_POST['tips']);
+    $usage_desc = trim($_POST['usage_desc']);
+    $synergy = trim($_POST['synergy']);
+    $counter = trim($_POST['counter']);
+    $recommended_heroes = trim($_POST['recommended_heroes']);
+    $note = trim($_POST['note']);
+    if ($name && $category) {
+        $stmt = $conn->prepare("INSERT INTO items (name, category, image_path, attr, description, tips, usage_desc, synergy, counter, recommended_heroes, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param('sssssssssss', $name, $category, $image_path, $attr, $desc, $tips, $usage_desc, $synergy, $counter, $recommended_heroes, $note);
         if ($stmt->execute()) {
             header('Location: manage_items.php?msg=added');
             exit();
@@ -22,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $msg = 'Gagal menambah item.';
         }
     } else {
-        $msg = 'Nama dan tipe item wajib diisi!';
+        $msg = 'Nama dan kategori item wajib diisi!';
     }
 }
 ?>
@@ -55,9 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" name="name" required>
             </div>
             <div class="form-group">
-                <label>Tipe Item</label>
-                <select name="type" required>
-                    <option value="">-- Pilih Tipe --</option>
+                <label>Kategori Item</label>
+                <select name="category" required>
+                    <option value="">-- Pilih Kategori --</option>
                     <option value="Attack">Attack</option>
                     <option value="Magic">Magic</option>
                     <option value="Defense">Defense</option>
@@ -77,6 +83,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <label>Deskripsi</label>
                 <textarea name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tips Singkat (Quote)</label>
+                <textarea name="tips" placeholder="Tips singkat penggunaan item..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Penjelasan Penggunaan (Usage Description)</label>
+                <textarea name="usage_desc" placeholder="Penjelasan detail penggunaan item..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Item Sinergi (pisahkan dengan koma)</label>
+                <input type="text" name="synergy" placeholder="Wind of Nature, Rose Gold Meteor">
+            </div>
+            <div class="form-group">
+                <label>Item Counter (pisahkan dengan koma)</label>
+                <input type="text" name="counter" placeholder="Dominance Ice">
+            </div>
+            <div class="form-group">
+                <label>Hero yang Cocok (pisahkan dengan koma)</label>
+                <input type="text" name="recommended_heroes" placeholder="Layla, Miya, Hanabi, Aulus, Freya">
+            </div>
+            <div class="form-group">
+                <label>Catatan</label>
+                <textarea name="note" placeholder="Catatan penting..."></textarea>
             </div>
             <button type="submit" class="btn">Tambah</button>
             <a href="manage_items.php" class="btn btn-cancel">Batal</a>

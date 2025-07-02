@@ -1,10 +1,13 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
 require_once '../includes/db_connect.php';
 
 // Cek apakah request method adalah POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    // Jika bukan POST, redirect ke halaman login
     header("Location: login.php");
     exit();
 }
@@ -48,11 +51,14 @@ if ($result->num_rows === 1) {
             header("Location: login.php?error=not_admin");
             exit();
         }
+    } else {
+        // Password salah, redirect error
+        header("Location: login.php?error=invalid_credentials");
+        exit();
     }
+} else {
+    // Username tidak ditemukan, redirect error
+    header("Location: login.php?error=invalid_credentials");
+    exit();
 }
-
-// Jika username tidak ditemukan atau password salah
-header("Location: login.php?error=invalid_credentials");
-exit();
-
 ?> 

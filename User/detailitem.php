@@ -78,29 +78,46 @@ function getRecipeLinear($conn, $item_id) {
 }
 $recipe_linear = getRecipeLinear($conn, $id);
 
-// Data tips & kecocokan item (contoh untuk Malefic Gun)
-$item_tips = [
-    'Malefic Gun' => [
-        'tips' => 'Paling cocok diperlengkapi oleh Marksman untuk meningkatkan Jangkauan Serangan mereka untuk kiting. Efektif melawan lawan dengan armor tinggi karena pasif Armor Buster. Hanya signifikan untuk hero dengan serangan dasar jarak jauh.',
-        'desc' => 'Malefic Gun merupakan item terbaik bagi Marksman untuk meningkatkan Jangkauan Serangan Dasar mereka untuk kiting sekaligus menghasilkan damage tinggi terhadap musuhnya. Item ini hanya cocok untuk marksman karena hanya akan memberikan efek yang signifikan jika digunakan oleh mereka. Namun ada beberapa hero seperti Aulus & Freya dapat menggunakannya karena Jangkauan Serangan Dasarnya yang jauh. Ia juga memberikan kecepatan serangan dan kecepatan gerak, yang merupakan apa yang dibutuhkan seorang Marksman. Ia juga efektif melawan lawan dengan pertahanan fisik tinggi karena pasif "Armor Buster" yang memberikan persentase penetrasi fisik.',
-        'synergy' => [
-            ['name' => 'Wind of Nature', 'img' => '../images/ITEM/Attack/17. Wind of Nature/Wind_of_Nature.webp'],
-            ['name' => 'Rose Gold Meteor', 'img' => '../images/ITEM/Attack/4. Rose Gold Meteor/Rose_Gold_Meteor.webp'],
-        ],
-        'counter' => [
-            ['name' => 'Dominance Ice', 'img' => '../images/ITEM/Defense/6. Dominance Ice/Dominance_Ice.webp'],
-        ],
-        'heroes' => [
-            ['name' => 'Layla', 'img' => '../images/HERO/Marksman/Layla/Layla.png'],
-            ['name' => 'Miya', 'img' => '../images/HERO/Marksman/Miya/Miya.png'],
-            ['name' => 'Hanabi', 'img' => '../images/HERO/Marksman/Hanabi/Hanabi.png'],
-            ['name' => 'Aulus', 'img' => '../images/HERO/Fighter/Aulus/Aulus.png'],
-            ['name' => 'Freya', 'img' => '../images/HERO/Fighter/Freya/Freya.png'],
-        ],
-        'note' => 'Jika Malefic Roar dibeli, JANGAN membeli Malefic Gun. Pasif "Armor Buster" tidak dapat ditumpuk dan efeknya tidak signifikan jika dikombinasikan.'
-    ],
-    // Tambahkan item lain di sini
+// Ambil data tips & kecocokan item dari database
+$tips = [
+    'tips' => $item['tips'] ?? '',
+    'desc' => $item['usage_desc'] ?? '',
+    'synergy' => [],
+    'counter' => [],
+    'heroes' => [],
+    'note' => $item['note'] ?? ''
 ];
+// Parsing item sinergi, counter, dan hero cocok (CSV -> array)
+if (!empty($item['synergy'])) {
+    $tips['synergy'] = array_map('trim', explode(',', $item['synergy']));
+}
+if (!empty($item['counter'])) {
+    $tips['counter'] = array_map('trim', explode(',', $item['counter']));
+}
+if (!empty($item['recommended_heroes'])) {
+    $tips['heroes'] = array_map('trim', explode(',', $item['recommended_heroes']));
+}
+// Helper: mapping nama ke gambar (bisa dikembangkan ke DB jika ingin dinamis)
+function getItemImg($name) {
+    $map = [
+        'Wind of Nature' => '../images/ITEM/Attack/17. Wind of Nature/Wind_of_Nature.webp',
+        'Rose Gold Meteor' => '../images/ITEM/Attack/4. Rose Gold Meteor/Rose_Gold_Meteor.webp',
+        'Dominance Ice' => '../images/ITEM/Defense/6. Dominance Ice/Dominance_Ice.webp',
+        // Tambahkan mapping lain jika perlu
+    ];
+    return $map[$name] ?? '../images/wallpaper.jpg';
+}
+function getHeroImg($name) {
+    $map = [
+        'Layla' => '../images/HERO/Marksman/Layla/Layla.png',
+        'Miya' => '../images/HERO/Marksman/Miya/Miya.png',
+        'Hanabi' => '../images/HERO/Marksman/Hanabi/Hanabi.png',
+        'Aulus' => '../images/HERO/Fighter/Aulus/Aulus.png',
+        'Freya' => '../images/HERO/Fighter/Freya/Freya.png',
+        // Tambahkan mapping lain jika perlu
+    ];
+    return $map[$name] ?? '../images/wallpaper.jpg';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -413,29 +430,35 @@ $item_tips = [
             <?php endif; ?>
         </div>
         <div class="item-tips-panel">
-            <?php if (isset($item_tips[$item['name']])): $tips = $item_tips[$item['name']]; ?>
+            <?php if (!empty($tips['tips']) || !empty($tips['desc']) || !empty($tips['heroes']) || !empty($tips['synergy']) || !empty($tips['counter']) || !empty($tips['note'])): ?>
             <div class="tips-title">Tips & Kecocokan</div>
-            <div class="tips-short">"<?php echo htmlspecialchars($tips['tips']); ?>"</div>
-            <div class="tips-desc"><?php echo htmlspecialchars($tips['desc']); ?></div>
+            <?php if (!empty($tips['tips'])): ?><div class="tips-short">"<?php echo htmlspecialchars($tips['tips']); ?>"</div><?php endif; ?>
+            <?php if (!empty($tips['desc'])): ?><div class="tips-desc"><?php echo htmlspecialchars($tips['desc']); ?></div><?php endif; ?>
+            <?php if (!empty($tips['heroes'])): ?>
             <div class="tips-section"><i class="fas fa-user-astronaut"></i>Hero yang Cocok:</div>
             <div class="tips-hero-list">
                 <?php foreach ($tips['heroes'] as $h): ?>
-                <div class="tips-hero"><img src="<?php echo htmlspecialchars($h['img']); ?>" alt="<?php echo htmlspecialchars($h['name']); ?>" title="<?php echo htmlspecialchars($h['name']); ?>"><div class="tips-hero-label"><?php echo htmlspecialchars($h['name']); ?></div></div>
+                <div class="tips-hero"><img src="<?php echo htmlspecialchars(getHeroImg($h)); ?>" alt="<?php echo htmlspecialchars($h); ?>" title="<?php echo htmlspecialchars($h); ?>"><div class="tips-hero-label"><?php echo htmlspecialchars($h); ?></div></div>
                 <?php endforeach; ?>
             </div>
+            <?php endif; ?>
+            <?php if (!empty($tips['synergy'])): ?>
             <div class="tips-section"><i class="fas fa-link"></i>Item Sinergi:</div>
             <div class="tips-item-list">
                 <?php foreach ($tips['synergy'] as $s): ?>
-                <div class="tips-item"><img src="<?php echo htmlspecialchars($s['img']); ?>" alt="<?php echo htmlspecialchars($s['name']); ?>" title="<?php echo htmlspecialchars($s['name']); ?>"><div class="tips-item-label"><?php echo htmlspecialchars($s['name']); ?></div></div>
+                <div class="tips-item"><img src="<?php echo htmlspecialchars(getItemImg($s)); ?>" alt="<?php echo htmlspecialchars($s); ?>" title="<?php echo htmlspecialchars($s); ?>"><div class="tips-item-label"><?php echo htmlspecialchars($s); ?></div></div>
                 <?php endforeach; ?>
             </div>
+            <?php endif; ?>
+            <?php if (!empty($tips['counter'])): ?>
             <div class="tips-section"><i class="fas fa-shield-alt"></i>Item Counter:</div>
             <div class="tips-item-list">
                 <?php foreach ($tips['counter'] as $c): ?>
-                <div class="tips-item"><img src="<?php echo htmlspecialchars($c['img']); ?>" alt="<?php echo htmlspecialchars($c['name']); ?>" title="<?php echo htmlspecialchars($c['name']); ?>"><div class="tips-item-label"><?php echo htmlspecialchars($c['name']); ?></div></div>
+                <div class="tips-item"><img src="<?php echo htmlspecialchars(getItemImg($c)); ?>" alt="<?php echo htmlspecialchars($c); ?>" title="<?php echo htmlspecialchars($c); ?>"><div class="tips-item-label"><?php echo htmlspecialchars($c); ?></div></div>
                 <?php endforeach; ?>
             </div>
-            <div class="tips-note"><b>Catatan:</b> <?php echo htmlspecialchars($tips['note']); ?></div>
+            <?php endif; ?>
+            <?php if (!empty($tips['note'])): ?><div class="tips-note"><b>Catatan:</b> <?php echo htmlspecialchars($tips['note']); ?></div><?php endif; ?>
             <?php endif; ?>
         </div>
     </div>
