@@ -67,62 +67,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <div class="form-box">
-        <h2>Edit Item</h2>
-        <?php if ($msg): ?><div class="msg"><?php echo $msg; ?></div><?php endif; ?>
-        <form method="post">
-            <div class="form-group">
-                <label>Nama Item</label>
-                <input type="text" name="name" value="<?php echo htmlspecialchars($item['name']); ?>" required>
+    <div class="admin-wrapper">
+        <?php include 'admin_sidebar.php'; ?>
+        <main class="main-content">
+            <?php $page_title = 'Edit Item'; include 'admin_header.php'; ?>
+            <div class="content-body">
+                <div class="form-box">
+                    <h2>Edit Item</h2>
+                    <?php if ($msg): ?><div class="msg"><?php echo $msg; ?></div><?php endif; ?>
+                    <form method="post">
+                        <div class="form-group">
+                            <label>Nama Item</label>
+                            <input type="text" name="name" value="<?php echo htmlspecialchars($item['name']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori Item</label>
+                            <select name="category" required>
+                                <option value="">-- Pilih Kategori --</option>
+                                <?php
+                                $types = ['Attack','Magic','Defense','Movement','Jungle','Roaming'];
+                                foreach ($types as $t) {
+                                    $sel = ($item['category'] === $t) ? 'selected' : '';
+                                    echo "<option value='$t' $sel>$t</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Path Gambar</label>
+                            <input type="text" name="image_path" value="<?php echo htmlspecialchars($item['image_path']); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea name="description"><?php echo htmlspecialchars($item['description']); ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Tips Singkat (Quote)</label>
+                            <textarea name="tips" placeholder="Tips singkat penggunaan item..."><?php echo htmlspecialchars($item['tips']); ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Penjelasan Penggunaan (Usage Description)</label>
+                            <textarea name="usage_desc" placeholder="Penjelasan detail penggunaan item..."><?php echo htmlspecialchars($item['usage_desc']); ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Item Sinergi (pisahkan dengan koma)</label>
+                            <input type="text" name="synergy" value="<?php echo htmlspecialchars($item['synergy']); ?>" placeholder="Wind of Nature, Rose Gold Meteor">
+                        </div>
+                        <div class="form-group">
+                            <label>Item Counter (pisahkan dengan koma)</label>
+                            <input type="text" name="counter" value="<?php echo htmlspecialchars($item['counter']); ?>" placeholder="Dominance Ice">
+                        </div>
+                        <div class="form-group">
+                            <label>Hero yang Cocok (pisahkan dengan koma)</label>
+                            <input type="text" name="recommended_heroes" value="<?php echo htmlspecialchars($item['recommended_heroes']); ?>" placeholder="Layla, Miya, Hanabi, Aulus, Freya">
+                        </div>
+                        <div class="form-group">
+                            <label>Catatan</label>
+                            <textarea name="note" placeholder="Catatan penting..."><?php echo htmlspecialchars($item['note']); ?></textarea>
+                        </div>
+                        <button type="submit" class="btn">Update</button>
+                        <a href="manage_items.php" class="btn btn-cancel">Batal</a>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Kategori Item</label>
-                <select name="category" required>
-                    <option value="">-- Pilih Kategori --</option>
-                    <?php
-                    $types = ['Attack','Magic','Defense','Movement','Jungle','Roaming'];
-                    foreach ($types as $t) {
-                        $sel = ($item['category'] === $t) ? 'selected' : '';
-                        echo "<option value='$t' $sel>$t</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Path Gambar</label>
-                <input type="text" name="image_path" value="<?php echo htmlspecialchars($item['image_path']); ?>">
-            </div>
-            <div class="form-group">
-                <label>Deskripsi</label>
-                <textarea name="description"><?php echo htmlspecialchars($item['description']); ?></textarea>
-            </div>
-            <div class="form-group">
-                <label>Tips Singkat (Quote)</label>
-                <textarea name="tips" placeholder="Tips singkat penggunaan item..."><?php echo htmlspecialchars($item['tips']); ?></textarea>
-            </div>
-            <div class="form-group">
-                <label>Penjelasan Penggunaan (Usage Description)</label>
-                <textarea name="usage_desc" placeholder="Penjelasan detail penggunaan item..."><?php echo htmlspecialchars($item['usage_desc']); ?></textarea>
-            </div>
-            <div class="form-group">
-                <label>Item Sinergi (pisahkan dengan koma)</label>
-                <input type="text" name="synergy" value="<?php echo htmlspecialchars($item['synergy']); ?>" placeholder="Wind of Nature, Rose Gold Meteor">
-            </div>
-            <div class="form-group">
-                <label>Item Counter (pisahkan dengan koma)</label>
-                <input type="text" name="counter" value="<?php echo htmlspecialchars($item['counter']); ?>" placeholder="Dominance Ice">
-            </div>
-            <div class="form-group">
-                <label>Hero yang Cocok (pisahkan dengan koma)</label>
-                <input type="text" name="recommended_heroes" value="<?php echo htmlspecialchars($item['recommended_heroes']); ?>" placeholder="Layla, Miya, Hanabi, Aulus, Freya">
-            </div>
-            <div class="form-group">
-                <label>Catatan</label>
-                <textarea name="note" placeholder="Catatan penting..."><?php echo htmlspecialchars($item['note']); ?></textarea>
-            </div>
-            <button type="submit" class="btn">Update</button>
-            <a href="manage_items.php" class="btn btn-cancel">Batal</a>
-        </form>
+        </main>
     </div>
 </body>
 </html> 

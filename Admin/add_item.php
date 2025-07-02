@@ -52,65 +52,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <div class="form-box">
-        <h2>Tambah Item</h2>
-        <?php if ($msg): ?><div class="msg"><?php echo $msg; ?></div><?php endif; ?>
-        <form method="post">
-            <div class="form-group">
-                <label>Nama Item</label>
-                <input type="text" name="name" required>
+    <div class="admin-wrapper">
+        <?php include 'admin_sidebar.php'; ?>
+        <main class="main-content">
+            <?php $page_title = 'Add Item'; include 'admin_header.php'; ?>
+            <div class="content-body">
+                <div class="form-box">
+                    <h2>Tambah Item</h2>
+                    <?php if ($msg): ?><div class="msg"><?php echo $msg; ?></div><?php endif; ?>
+                    <form method="post">
+                        <div class="form-group">
+                            <label>Nama Item</label>
+                            <input type="text" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori Item</label>
+                            <select name="category" required>
+                                <option value="">-- Pilih Kategori --</option>
+                                <option value="Attack">Attack</option>
+                                <option value="Magic">Magic</option>
+                                <option value="Defense">Defense</option>
+                                <option value="Movement">Movement</option>
+                                <option value="Jungle">Jungle</option>
+                                <option value="Roaming">Roaming</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Path Gambar</label>
+                            <input type="text" name="image_path" placeholder="../images/ITEM/Attack/1. Malefic Gun/Malefic_Gun.webp">
+                        </div>
+                        <div class="form-group">
+                            <label>Atribut (HTML diperbolehkan)</label>
+                            <input type="text" name="attr">
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea name="description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Tips Singkat (Quote)</label>
+                            <textarea name="tips" placeholder="Tips singkat penggunaan item..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Penjelasan Penggunaan (Usage Description)</label>
+                            <textarea name="usage_desc" placeholder="Penjelasan detail penggunaan item..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Item Sinergi (pisahkan dengan koma)</label>
+                            <input type="text" name="synergy" placeholder="Wind of Nature, Rose Gold Meteor">
+                        </div>
+                        <div class="form-group">
+                            <label>Item Counter (pisahkan dengan koma)</label>
+                            <input type="text" name="counter" placeholder="Dominance Ice">
+                        </div>
+                        <div class="form-group">
+                            <label>Hero yang Cocok (pisahkan dengan koma)</label>
+                            <input type="text" name="recommended_heroes" placeholder="Layla, Miya, Hanabi, Aulus, Freya">
+                        </div>
+                        <div class="form-group">
+                            <label>Catatan</label>
+                            <textarea name="note" placeholder="Catatan penting..."></textarea>
+                        </div>
+                        <button type="submit" class="btn">Tambah</button>
+                        <a href="manage_items.php" class="btn btn-cancel">Batal</a>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Kategori Item</label>
-                <select name="category" required>
-                    <option value="">-- Pilih Kategori --</option>
-                    <option value="Attack">Attack</option>
-                    <option value="Magic">Magic</option>
-                    <option value="Defense">Defense</option>
-                    <option value="Movement">Movement</option>
-                    <option value="Jungle">Jungle</option>
-                    <option value="Roaming">Roaming</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Path Gambar</label>
-                <input type="text" name="image_path" placeholder="../images/ITEM/Attack/1. Malefic Gun/Malefic_Gun.webp">
-            </div>
-            <div class="form-group">
-                <label>Atribut (HTML diperbolehkan)</label>
-                <input type="text" name="attr">
-            </div>
-            <div class="form-group">
-                <label>Deskripsi</label>
-                <textarea name="description"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Tips Singkat (Quote)</label>
-                <textarea name="tips" placeholder="Tips singkat penggunaan item..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Penjelasan Penggunaan (Usage Description)</label>
-                <textarea name="usage_desc" placeholder="Penjelasan detail penggunaan item..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Item Sinergi (pisahkan dengan koma)</label>
-                <input type="text" name="synergy" placeholder="Wind of Nature, Rose Gold Meteor">
-            </div>
-            <div class="form-group">
-                <label>Item Counter (pisahkan dengan koma)</label>
-                <input type="text" name="counter" placeholder="Dominance Ice">
-            </div>
-            <div class="form-group">
-                <label>Hero yang Cocok (pisahkan dengan koma)</label>
-                <input type="text" name="recommended_heroes" placeholder="Layla, Miya, Hanabi, Aulus, Freya">
-            </div>
-            <div class="form-group">
-                <label>Catatan</label>
-                <textarea name="note" placeholder="Catatan penting..."></textarea>
-            </div>
-            <button type="submit" class="btn">Tambah</button>
-            <a href="manage_items.php" class="btn btn-cancel">Batal</a>
-        </form>
+        </main>
     </div>
 </body>
 </html> 
