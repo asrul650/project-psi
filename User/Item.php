@@ -33,7 +33,7 @@ if ($filter && in_array($filter, $categories)) {
     }
 }
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
