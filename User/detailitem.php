@@ -116,17 +116,17 @@ $recipe_tree = getRecipeTree($conn, $id);
             align-items: center;
             background: #181c23;
             border-radius: 16px;
-            padding: 24px 18px 18px 18px;
-            min-width: 320px;
-            max-width: 350px;
+            padding: 28px 12px 18px 12px;
+            min-width: 220px;
+            max-width: 320px;
             margin-left: auto;
             box-shadow: 0 0 0 2px #232b4a;
         }
         .tree-level {
             display: flex;
             justify-content: center;
-            gap: 18px;
-            margin-bottom: 18px;
+            gap: 16px;
+            margin-bottom: 16px;
             position: relative;
         }
         .tree-item {
@@ -135,36 +135,29 @@ $recipe_tree = getRecipeTree($conn, $id);
             align-items: center;
             background: #232b4a;
             border-radius: 50%;
-            padding: 10px;
-            width: 90px;
-            height: 90px;
+            padding: 5px;
+            width: 60px;
+            height: 60px;
             box-shadow: 0 2px 8px #0003;
             position: relative;
-            margin: 0 10px;
+            margin: 0 5px;
+            transition: box-shadow 0.2s, border 0.2s;
+            border: 2px solid #232b4a;
+        }
+        .tree-item:hover {
+            box-shadow: 0 4px 12px #00bfff44;
+            border: 2px solid #00bfff;
         }
         .tree-item img {
-            width: 54px;
-            height: 54px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            margin-bottom: 4px;
+            margin-bottom: 0;
             display: block;
         }
-        .tree-item span {
-            color: #fff;
-            font-size: 0.98rem;
-            text-align: center;
-            margin-top: 2px;
-            word-break: break-word;
-            max-width: 80px;
-            white-space: normal;
-            line-height: 1.1;
-            display: block;
-        }
+        .tree-item span { display: none; }
         .tree-connector {
-            width: 2px;
-            height: 18px;
-            background: #00bfff;
-            margin: 0 auto;
+            display: none;
         }
         .item-recipe-title {
             color: #ffe600;
@@ -173,6 +166,12 @@ $recipe_tree = getRecipeTree($conn, $id);
             text-align: center;
             font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
+        }
+        @media (max-width: 600px) {
+            .item-recipe-tree { max-width: 98vw; min-width: 0; padding: 16px 2vw; }
+            .tree-item { width: 44px; height: 44px; }
+            .tree-item img { width: 34px; height: 34px; }
+            .tree-level { gap: 8px; margin-bottom: 10px; }
         }
     </style>
 </head>
@@ -213,11 +212,10 @@ $recipe_tree = getRecipeTree($conn, $id);
                 if ($img && strpos($img, '../') !== 0) $img = '../' . $img;
                 echo '<div class="tree-level">';
                 echo '<div class="tree-item">';
-                echo '<img src="' . htmlspecialchars($img ?: '../images/wallpaper.jpg') . '" alt="' . htmlspecialchars($item['name']) . '"><span>' . htmlspecialchars($item['name']) . '</span>';
+                echo '<img src="' . htmlspecialchars($img ?: '../images/wallpaper.jpg') . '" alt="' . htmlspecialchars($item['name']) . '">';
                 echo '</div>';
                 echo '</div>';
                 if (!empty($item['components'])) {
-                    echo '<div class="tree-connector"></div>';
                     echo '<div class="tree-level">';
                     foreach ($item['components'] as $c) {
                         renderRecipeTree($c, $level + 1);
