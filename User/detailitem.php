@@ -54,6 +54,53 @@ function getRecipeTree($conn, $item_id) {
     return $tree;
 }
 $recipe_tree = getRecipeTree($conn, $id);
+
+// Fungsi untuk mengambil urutan linear komponen resep (dari komponen dasar ke item jadi)
+function getRecipeLinear($conn, $item_id) {
+    $stmt = $conn->prepare('SELECT i.id, i.name, i.image_path FROM item_recipes ir JOIN items i ON ir.component_item_id=i.id WHERE ir.item_id=?');
+    $stmt->bind_param('i', $item_id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $components = [];
+    if ($res) {
+        while ($row = $res->fetch_assoc()) {
+            // Cek apakah komponen ini punya komponen lagi (rekursif)
+            $sub = getRecipeLinear($conn, $row['id']);
+            if ($sub) {
+                foreach ($sub as $s) $components[] = $s;
+            } else {
+                $components[] = $row;
+            }
+        }
+    }
+    $stmt->close();
+    return $components;
+}
+$recipe_linear = getRecipeLinear($conn, $id);
+
+// Data tips & kecocokan item (contoh untuk Malefic Gun)
+$item_tips = [
+    'Malefic Gun' => [
+        'tips' => 'Paling cocok diperlengkapi oleh Marksman untuk meningkatkan Jangkauan Serangan mereka untuk kiting. Efektif melawan lawan dengan armor tinggi karena pasif Armor Buster. Hanya signifikan untuk hero dengan serangan dasar jarak jauh.',
+        'desc' => 'Malefic Gun merupakan item terbaik bagi Marksman untuk meningkatkan Jangkauan Serangan Dasar mereka untuk kiting sekaligus menghasilkan damage tinggi terhadap musuhnya. Item ini hanya cocok untuk marksman karena hanya akan memberikan efek yang signifikan jika digunakan oleh mereka. Namun ada beberapa hero seperti Aulus & Freya dapat menggunakannya karena Jangkauan Serangan Dasarnya yang jauh. Ia juga memberikan kecepatan serangan dan kecepatan gerak, yang merupakan apa yang dibutuhkan seorang Marksman. Ia juga efektif melawan lawan dengan pertahanan fisik tinggi karena pasif "Armor Buster" yang memberikan persentase penetrasi fisik.',
+        'synergy' => [
+            ['name' => 'Wind of Nature', 'img' => '../images/ITEM/Attack/17. Wind of Nature/Wind_of_Nature.webp'],
+            ['name' => 'Rose Gold Meteor', 'img' => '../images/ITEM/Attack/4. Rose Gold Meteor/Rose_Gold_Meteor.webp'],
+        ],
+        'counter' => [
+            ['name' => 'Dominance Ice', 'img' => '../images/ITEM/Defense/6. Dominance Ice/Dominance_Ice.webp'],
+        ],
+        'heroes' => [
+            ['name' => 'Layla', 'img' => '../images/HERO/Marksman/Layla/Layla.png'],
+            ['name' => 'Miya', 'img' => '../images/HERO/Marksman/Miya/Miya.png'],
+            ['name' => 'Hanabi', 'img' => '../images/HERO/Marksman/Hanabi/Hanabi.png'],
+            ['name' => 'Aulus', 'img' => '../images/HERO/Fighter/Aulus/Aulus.png'],
+            ['name' => 'Freya', 'img' => '../images/HERO/Fighter/Freya/Freya.png'],
+        ],
+        'note' => 'Jika Malefic Roar dibeli, JANGAN membeli Malefic Gun. Pasif "Armor Buster" tidak dapat ditumpuk dan efeknya tidak signifikan jika dikombinasikan.'
+    ],
+    // Tambahkan item lain di sini
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -173,6 +220,156 @@ $recipe_tree = getRecipeTree($conn, $id);
             .tree-item img { width: 34px; height: 34px; }
             .tree-level { gap: 8px; margin-bottom: 10px; }
         }
+        .item-recipe-horizontal {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 18px;
+            margin: 32px 0 0 0;
+            padding: 18px 0 0 0;
+            border-top: 1.5px solid #232b4a;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #232b4a #181c23;
+            flex-wrap: nowrap;
+        }
+        .recipe-node {
+            background: #232b4a;
+            border-radius: 50%;
+            width: 54px;
+            height: 54px;
+            min-width: 54px;
+            max-width: 54px;
+            min-height: 54px;
+            max-height: 54px;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px #0003;
+            border: 2px solid #232b4a;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .recipe-node img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: block;
+        }
+        .recipe-arrow {
+            font-size: 1.8rem;
+            color: #00bfff;
+            margin: 0 2px;
+            user-select: none;
+        }
+        @media (max-width: 600px) {
+            .item-recipe-horizontal { gap: 8px; padding: 10px 0 0 0; }
+            .recipe-node { width: 36px; height: 36px; min-width: 36px; max-width: 36px; min-height: 36px; max-height: 36px; aspect-ratio: 1/1; }
+            .recipe-node img { width: 24px; height: 24px; }
+            .recipe-arrow { font-size: 1.1rem; }
+        }
+        .item-tips-panel {
+            flex:1.2;
+            background: #232b4a;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.13), 0 0 0 2px #00bfff33;
+            border: 1.5px solid #232b4a;
+            padding: 32px 28px 24px 28px;
+            margin-left: 36px;
+            min-width: 320px;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+        .tips-title {
+            color: #ffe600;
+            font-size: 1.35rem;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-align: left;
+            border-left: 4px solid #00bfff;
+            padding-left: 12px;
+        }
+        .tips-short {
+            color: #b0d0ff;
+            font-size: 1.08rem;
+            font-style: italic;
+            margin-bottom: 8px;
+            padding-left: 8px;
+        }
+        .tips-desc {
+            color: #e0e6f7;
+            font-size: 1.01rem;
+            margin-bottom: 12px;
+            padding-left: 8px;
+        }
+        .tips-section {
+            color: #00bfff;
+            font-size: 1.08rem;
+            margin-top: 12px;
+            margin-bottom: 2px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .tips-section i {
+            color: #ffe600;
+            font-size: 1.1em;
+            margin-right: 2px;
+        }
+        .tips-hero-list, .tips-item-list {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .tips-hero, .tips-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+        .tips-hero img, .tips-item img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #181c23;
+            box-shadow: 0 2px 8px #00bfff22;
+            border: 2px solid #232b4a;
+            transition: box-shadow 0.2s, border 0.2s;
+        }
+        .tips-hero img:hover, .tips-item img:hover {
+            box-shadow: 0 4px 16px #00bfff66;
+            border: 2px solid #00bfff;
+        }
+        .tips-hero-label, .tips-item-label {
+            color: #b0d0ff;
+            font-size: 0.92rem;
+            margin-top: 2px;
+            text-align: center;
+            max-width: 60px;
+            word-break: break-word;
+        }
+        .tips-note {
+            color: #232b4a;
+            font-size: 0.99rem;
+            margin-top: 14px;
+            background: #ffe600;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px #ffe60033;
+        }
+        @media (max-width: 900px) {
+            .item-detail-section { flex-direction: column; gap: 24px; }
+            .item-tips-panel { margin-left: 0; max-width: 98vw; min-width: 0; }
+        }
     </style>
 </head>
 <body>
@@ -194,7 +391,7 @@ $recipe_tree = getRecipeTree($conn, $id);
         </nav>
     </header>
     <main>
-    <div class="item-detail-section">
+    <div class="item-detail-section" style="display:flex;gap:40px;align-items:flex-start;">
         <div style="flex:1;max-width:420px;">
             <div class="item-image">
                 <img src="<?php echo htmlspecialchars($img ?: '../images/wallpaper.jpg'); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
@@ -202,35 +399,44 @@ $recipe_tree = getRecipeTree($conn, $id);
             <h2><?php echo htmlspecialchars($item['name']); ?></h2>
             <div class="item-attr"><?php echo isset($item['attr']) ? htmlspecialchars($item['attr']) : ''; ?></div>
             <div class="item-desc"><?php echo nl2br(htmlspecialchars($item['description'])); ?></div>
+            <?php if (!empty($recipe_linear)): ?>
+            <div class="item-recipe-horizontal">
+                <?php foreach ($recipe_linear as $i => $c):
+                    $imgc = $c['image_path'] ?? '';
+                    if ($imgc && strpos($imgc, '../') !== 0) $imgc = '../' . $imgc;
+                ?>
+                    <div class="recipe-node"><img src="<?php echo htmlspecialchars($imgc ?: '../images/wallpaper.jpg'); ?>" alt=""></div>
+                    <span class="recipe-arrow">&#8594;</span>
+                <?php endforeach; ?>
+                <div class="recipe-node"><img src="<?php echo htmlspecialchars($img ?: '../images/wallpaper.jpg'); ?>" alt=""></div>
+            </div>
+            <?php endif; ?>
         </div>
-        <div class="item-recipe-tree">
-            <div class="item-recipe-title">RECIPE</div>
-            <?php
-            // Fungsi bantu untuk render tree bertingkat
-            function renderRecipeTree($item, $level = 0) {
-                $img = $item['image_path'] ?? '';
-                if ($img && strpos($img, '../') !== 0) $img = '../' . $img;
-                echo '<div class="tree-level">';
-                echo '<div class="tree-item">';
-                echo '<img src="' . htmlspecialchars($img ?: '../images/wallpaper.jpg') . '" alt="' . htmlspecialchars($item['name']) . '">';
-                echo '</div>';
-                echo '</div>';
-                if (!empty($item['components'])) {
-                    echo '<div class="tree-level">';
-                    foreach ($item['components'] as $c) {
-                        renderRecipeTree($c, $level + 1);
-                    }
-                    echo '</div>';
-                }
-            }
-            // Render tree mulai dari item utama
-            $main_item = [
-                'name' => $item['name'],
-                'image_path' => $item['image_path'],
-                'components' => $recipe_tree
-            ];
-            renderRecipeTree($main_item);
-            ?>
+        <div class="item-tips-panel">
+            <?php if (isset($item_tips[$item['name']])): $tips = $item_tips[$item['name']]; ?>
+            <div class="tips-title">Tips & Kecocokan</div>
+            <div class="tips-short">"<?php echo htmlspecialchars($tips['tips']); ?>"</div>
+            <div class="tips-desc"><?php echo htmlspecialchars($tips['desc']); ?></div>
+            <div class="tips-section"><i class="fas fa-user-astronaut"></i>Hero yang Cocok:</div>
+            <div class="tips-hero-list">
+                <?php foreach ($tips['heroes'] as $h): ?>
+                <div class="tips-hero"><img src="<?php echo htmlspecialchars($h['img']); ?>" alt="<?php echo htmlspecialchars($h['name']); ?>" title="<?php echo htmlspecialchars($h['name']); ?>"><div class="tips-hero-label"><?php echo htmlspecialchars($h['name']); ?></div></div>
+                <?php endforeach; ?>
+            </div>
+            <div class="tips-section"><i class="fas fa-link"></i>Item Sinergi:</div>
+            <div class="tips-item-list">
+                <?php foreach ($tips['synergy'] as $s): ?>
+                <div class="tips-item"><img src="<?php echo htmlspecialchars($s['img']); ?>" alt="<?php echo htmlspecialchars($s['name']); ?>" title="<?php echo htmlspecialchars($s['name']); ?>"><div class="tips-item-label"><?php echo htmlspecialchars($s['name']); ?></div></div>
+                <?php endforeach; ?>
+            </div>
+            <div class="tips-section"><i class="fas fa-shield-alt"></i>Item Counter:</div>
+            <div class="tips-item-list">
+                <?php foreach ($tips['counter'] as $c): ?>
+                <div class="tips-item"><img src="<?php echo htmlspecialchars($c['img']); ?>" alt="<?php echo htmlspecialchars($c['name']); ?>" title="<?php echo htmlspecialchars($c['name']); ?>"><div class="tips-item-label"><?php echo htmlspecialchars($c['name']); ?></div></div>
+                <?php endforeach; ?>
+            </div>
+            <div class="tips-note"><b>Catatan:</b> <?php echo htmlspecialchars($tips['note']); ?></div>
+            <?php endif; ?>
         </div>
     </div>
     </main>
