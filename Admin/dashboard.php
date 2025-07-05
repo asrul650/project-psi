@@ -50,11 +50,10 @@ if ($conn->query("SHOW TABLES LIKE 'builds'")->num_rows) {
                     <li class="active"><a href="dashboard.php">Dashboard</a></li>
                     <li><a href="manage_heroes.php">Manage Hero Details</a></li>
                     <li><a href="manage_hero_tiers.php">Manage Hero Tiers</a></li>
-                    <li><a href="#">Manage Counter Picks</a></li>
-                    <li><a href="#">Manage Items</a></li>
-                    <li><a href="#">Manage Builds</a></li>
-                    <li><a href="#">Manage Discussions</a></li>
-                    <li><a href="#">Manage Users</a></li>
+                    <li><a href="manage_items.php">Manage Items</a></li>
+                    <li><a href="manage_builds.php">Manage Builds</a></li>
+                    <li><a href="manage_discussions.php">Manage Discussions</a></li>
+                    <li><a href="manage_users.php">Manage Users</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 </ul>
             </nav>
