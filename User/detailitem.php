@@ -445,17 +445,42 @@ function getHeroImg($name) {
             <?php if (!empty($tips['synergy'])): ?>
             <div class="tips-section"><i class="fas fa-link"></i>Item Sinergi:</div>
             <div class="tips-item-list">
-                <?php foreach ($tips['synergy'] as $s): ?>
-                <div class="tips-item"><img src="<?php echo htmlspecialchars(getItemImg($s)); ?>" alt="<?php echo htmlspecialchars($s); ?>" title="<?php echo htmlspecialchars($s); ?>"><div class="tips-item-label"><?php echo htmlspecialchars($s); ?></div></div>
-                <?php endforeach; ?>
+            <?php foreach ($tips['synergy'] as $s): ?>
+            <?php
+                $img_synergy = '../images/wallpaper.jpg';
+                $stmt = $conn->prepare("SELECT image_path FROM items WHERE name = ?");
+                $stmt->bind_param("s", $s);
+                $stmt->execute();
+                $stmt->bind_result($img_path);
+                if ($stmt->fetch() && $img_path) {
+                    $img_synergy = (strpos($img_path, '../') === 0) ? $img_path : '../' . $img_path;
+                }
+                $stmt->close();
+            ?>
+            <div class="tips-item"><img src="<?php echo htmlspecialchars($img_synergy); ?>" alt="<?php echo htmlspecialchars($s); ?>" title="<?php echo htmlspecialchars($s); ?>"><div class="tips-item-label"><?php echo htmlspecialchars($s); ?></div></div>
+            <?php endforeach; ?>
             </div>
             <?php endif; ?>
             <?php if (!empty($tips['counter'])): ?>
             <div class="tips-section"><i class="fas fa-shield-alt"></i>Item Counter:</div>
             <div class="tips-item-list">
-                <?php foreach ($tips['counter'] as $c): ?>
-                <div class="tips-item"><img src="<?php echo htmlspecialchars(getItemImg($c)); ?>" alt="<?php echo htmlspecialchars($c); ?>" title="<?php echo htmlspecialchars($c); ?>"><div class="tips-item-label"><?php echo htmlspecialchars($c); ?></div></div>
-                <?php endforeach; ?>
+            <?php foreach ($tips['counter'] as $c): 
+                // Query ke database untuk ambil image_path berdasarkan nama item
+                $img_counter = '../images/wallpaper.jpg';
+                $stmt = $conn->prepare("SELECT image_path FROM items WHERE name = ?");
+                $stmt->bind_param("s", $c);
+                $stmt->execute();
+                $stmt->bind_result($img_path);
+                if ($stmt->fetch() && $img_path) {
+                    $img_counter = (strpos($img_path, '../') === 0) ? $img_path : '../' . $img_path;
+                }
+                $stmt->close();
+            ?>
+            <div class="tips-item">
+                <img src="<?php echo htmlspecialchars($img_counter); ?>" alt="<?php echo htmlspecialchars($c); ?>" title="<?php echo htmlspecialchars($c); ?>">
+                <div class="tips-item-label"><?php echo htmlspecialchars($c); ?></div>
+            </div>
+            <?php endforeach; ?>
             </div>
             <?php endif; ?>
             <?php if (!empty($tips['note'])): ?><div class="tips-note"><b>Catatan:</b> <?php echo htmlspecialchars($tips['note']); ?></div><?php endif; ?>
