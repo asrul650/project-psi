@@ -3,7 +3,7 @@ session_start();
 require_once '../includes/db_connect.php';
 
 // Cek otorisasi admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['user_id_admin']) || $_SESSION['role_admin'] !== 'admin') {
     header("Location: login.php?error=unauthorized");
     exit();
 }

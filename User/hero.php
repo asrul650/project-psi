@@ -167,10 +167,16 @@ $filtered_heroes = $filter === 'Semua' ? $heroes : array_filter($heroes, functio
                 </form>
             <?php endforeach; ?>
         </div>
-        <div class="hero-list-grid">
+        <div style="display:flex;justify-content:center;margin-bottom:24px;">
+            <div style="position:relative;max-width:420px;width:100%;">
+                <input type="text" id="search-hero" placeholder="Search heroes..." style="width:100%;padding:12px 18px 12px 38px;border-radius:24px;border:2px solid #ffe600;background:#23283a;color:#ffe600;font-size:1.1rem;outline:none;box-shadow:0 2px 8px #ffe60022;">
+                <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#ffe600;font-size:1.2em;"><i class="fas fa-search"></i></span>
+            </div>
+        </div>
+        <div class="hero-list-grid" id="hero-list-grid">
             <?php if (count($filtered_heroes) > 0): ?>
                 <?php foreach ($filtered_heroes as $hero): ?>
-                <a href="detailhero.php?id=<?= $hero['id'] ?>" class="hero-card">
+                <a href="detailhero.php?id=<?= $hero['id'] ?>" class="hero-card" data-hero-name="<?= strtolower(htmlspecialchars($hero['name'])) ?>">
                     <img src="../<?= $hero['image_path'] ? htmlspecialchars($hero['image_path']) : 'assets/images/default_hero.png' ?>" alt="<?= htmlspecialchars($hero['name']) ?>">
                     <div class="hero-card-name"><?= htmlspecialchars($hero['name']) ?></div>
                     <div class="hero-card-role"><?= htmlspecialchars($hero['role']) ?></div>
@@ -211,5 +217,14 @@ $filtered_heroes = $filter === 'Semua' ? $heroes : array_filter($heroes, functio
     </footer>
 
     <script src="../js/script.js"></script>
+    <script>
+    document.getElementById('search-hero').addEventListener('input', function() {
+        const val = this.value.trim().toLowerCase();
+        document.querySelectorAll('#hero-list-grid .hero-card').forEach(card => {
+            const name = card.getAttribute('data-hero-name');
+            card.style.display = (!val || name.includes(val)) ? '' : 'none';
+        });
+    });
+    </script>
 </body>
 </html> 
