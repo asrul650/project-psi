@@ -23,7 +23,7 @@ if (isset($_SESSION['user_id'])) {
         </label>
         <nav>
             <ul>
-                <li><a href="index.php">Home</a></li>
+                <li><a href="index.php">Homee</a></li>
                 <li><a href="#news">News</a></li>
                 <li><a href="#spotlight">Pahlawan Unggulan</a></li>
                 <li><a href="includes/auth.php">Login</a></li>
