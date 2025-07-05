@@ -68,6 +68,7 @@ $filtered_heroes = $filter === 'Semua' ? $heroes : array_filter($heroes, functio
             padding: 0 16px 40px 16px;
             max-width: 1200px;
             margin: 0 auto;
+            justify-items: center;
         }
         .hero-card {
             background: #23283a;
@@ -79,6 +80,8 @@ $filtered_heroes = $filter === 'Semua' ? $heroes : array_filter($heroes, functio
             display: flex;
             flex-direction: column;
             align-items: stretch;
+            width: 100%;
+            max-width: 300px;
         }
         .hero-card:hover {
             transform: translateY(-8px) scale(1.03);
