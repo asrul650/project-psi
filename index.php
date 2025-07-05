@@ -16,7 +16,7 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body>
     <header>
-        <h1>HeroVerse</h1>
+        <h1>Mobile Legends Guide</h1>
         <input type="checkbox" id="nav-toggle" class="nav-toggle">
         <label for="nav-toggle" class="nav-toggle-label">
             <span></span>
