@@ -30,20 +30,25 @@ $tier_order = ['SS', 'S', 'A', 'B', 'C', 'D'];
     <link rel="stylesheet" href="../css/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        body {
+            background: linear-gradient(135deg, #181c24 0%, #232b4a 100%);
+        }
         .tier-list-container {
             max-width: 1200px;
             margin: 30px auto;
-            padding: 20px;
-            background: #10141a;
-            border-radius: 8px;
+            padding: 32px 18px 24px 18px;
+            background: rgba(16,20,26,0.98);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px #7B1FA233, 0 1.5px 8px #ffe60022;
         }
         .tier-section {
-            margin-bottom: 40px;
-            background: #181c24;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-            border-left: 5px solid;
+            margin-bottom: 48px;
+            background: linear-gradient(120deg, #232b4a 80%, #181c24 100%);
+            border-radius: 18px;
+            padding: 28px 18px 24px 18px;
+            box-shadow: 0 4px 24px #7B1FA244;
+            border-left: 8px solid;
+            position: relative;
         }
         .tier-SS { border-color: #ff4545; }
         .tier-S { border-color: #ff9f45; }
@@ -55,42 +60,67 @@ $tier_order = ['SS', 'S', 'A', 'B', 'C', 'D'];
         .tier-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 18px;
+            margin-bottom: 22px;
             cursor: pointer;
             user-select: none;
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 10px 18px 10px 10px;
+            box-shadow: 0 2px 8px #ffe60022;
         }
         .tier-header .fa-chevron-down {
             margin-left: auto;
             font-size: 1.3em;
             transition: transform 0.2s;
+            color: #ffe600;
         }
         .tier-header.collapsed .fa-chevron-down {
             transform: rotate(-90deg);
         }
         .tier-badge {
-            font-size: 2.5rem;
+            font-size: 2.7rem;
             font-weight: bold;
             color: #fff;
-            padding: 5px 20px;
-            border-radius: 8px;
-            min-width: 80px;
+            padding: 8px 28px;
+            border-radius: 12px;
+            min-width: 90px;
             text-align: center;
+            box-shadow: 0 2px 12px #ffe60033;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .tier-badge-SS { background-color: #ff4545; }
-        .tier-badge-S { background-color: #ff9f45; }
-        .tier-badge-A { background-color: #45a2ff; }
-        .tier-badge-B { background-color: #2ed573; }
-        .tier-badge-C { background-color: #a0a0a0; }
-        .tier-badge-D { background-color: #6a6a6a; }
+        .tier-badge-SS { background: linear-gradient(90deg,#ff4545 60%,#ffe600 100%); box-shadow:0 0 16px #ff4545aa; }
+        .tier-badge-S { background: linear-gradient(90deg,#ff9f45 60%,#ffe600 100%); box-shadow:0 0 16px #ff9f45aa; }
+        .tier-badge-A { background: linear-gradient(90deg,#45a2ff 60%,#ffe600 100%); box-shadow:0 0 16px #45a2ffaa; }
+        .tier-badge-B { background: linear-gradient(90deg,#2ed573 60%,#ffe600 100%); box-shadow:0 0 16px #2ed573aa; }
+        .tier-badge-C { background: linear-gradient(90deg,#a0a0a0 60%,#ffe600 100%); box-shadow:0 0 16px #a0a0a0aa; }
+        .tier-badge-D { background: linear-gradient(90deg,#6a6a6a 60%,#ffe600 100%); box-shadow:0 0 16px #6a6a6aaa; }
+        .tier-badge-SS::before { content: '⭐'; font-size:1.2em; margin-right:6px; }
+        .tier-badge-S::before { content: '🥇'; font-size:1.2em; margin-right:6px; }
+        .tier-badge-A::before { content: '🥈'; font-size:1.2em; margin-right:6px; }
+        .tier-badge-B::before { content: '🥉'; font-size:1.2em; margin-right:6px; }
+        .tier-badge-C::before { content: '🔹'; font-size:1.2em; margin-right:6px; }
+        .tier-badge-D::before { content: '🔸'; font-size:1.2em; margin-right:6px; }
 
-        .tier-description { color: #bfc8e2; font-size: 1rem; }
+        .tier-description {
+            color: #ffe600;
+            font-size: 1.08rem;
+            font-weight: 600;
+            background: rgba(123,31,162,0.10);
+            border-radius: 8px;
+            padding: 7px 18px;
+            margin-left: 8px;
+            box-shadow: 0 1px 6px #ffe60022;
+        }
         .hero-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 24px;
             transition: max-height 0.3s, opacity 0.3s;
             overflow: hidden;
+            margin-top: 8px;
         }
         .hero-grid.collapsed {
             max-height: 0;
@@ -100,8 +130,8 @@ $tier_order = ['SS', 'S', 'A', 'B', 'C', 'D'];
             margin: 0;
         }
         .hero-tier-card {
-            background: #232b4a;
-            border-radius: 8px;
+            background: linear-gradient(135deg,#23283a 60%,#181c24 100%);
+            border-radius: 16px;
             overflow: hidden;
             text-align: center;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -109,22 +139,39 @@ $tier_order = ['SS', 'S', 'A', 'B', 'C', 'D'];
             color: white;
             cursor: pointer;
             pointer-events: auto;
+            box-shadow: 0 2px 12px #ffe60022;
+            border: 2.5px solid #ffe60033;
         }
-        .hero-tier-card * {
-            pointer-events: none;
-        }
+        .hero-tier-card * { pointer-events: none; }
         .hero-tier-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transform: translateY(-7px) scale(1.04);
+            box-shadow: 0 8px 32px #ffe60055;
+            border: 2.5px solid #ffe600;
         }
         .hero-tier-card img {
             width: 100%;
             height: 120px;
             object-fit: cover;
+            border-bottom: 2px solid #ffe60044;
         }
         .hero-tier-card .hero-name {
-            padding: 10px 5px;
-            font-weight: 600;
+            padding: 12px 5px 10px 5px;
+            font-weight: 700;
+            font-size: 1.08rem;
+            color: #ffe600;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 6px #23283a99;
+        }
+        @media (max-width: 900px) {
+            .tier-list-container { padding: 10px 2vw; }
+            .tier-section { padding: 18px 6px 14px 6px; }
+            .hero-grid { gap: 12px; }
+        }
+        @media (max-width: 600px) {
+            .tier-list-container { padding: 2px 0; }
+            .tier-section { padding: 8px 2px 8px 2px; }
+            .hero-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .hero-tier-card img { height: 80px; }
         }
     </style>
 </head>
