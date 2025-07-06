@@ -51,6 +51,26 @@ if ($show_detail && $hero_detail) {
     while ($row = $res->fetch_assoc()) $user_builds[] = $row;
     $stmt->close();
 }
+
+// Ambil data item dari database
+$items_by_category = [
+    'attack' => [], 'defense' => [], 'magic' => [], 'movement' => [], 'jungle' => []
+];
+$item_sql = "SELECT * FROM items ORDER BY category, name";
+$item_res = $conn->query($item_sql);
+if ($item_res && $item_res->num_rows > 0) {
+    while ($item = $item_res->fetch_assoc()) {
+        $cat = strtolower($item['category']);
+        if (isset($items_by_category[$cat])) {
+            $items_by_category[$cat][] = [
+                'id' => (int)$item['id'],
+                'name' => $item['name'],
+                'price' => (int)$item['price'],
+                'image' => $item['image_path'] ? '../' . $item['image_path'] : '../assets/images/default_item.png'
+            ];
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -728,85 +748,11 @@ if ($show_detail && $hero_detail) {
     let currentHeroId = null;
     let selectedItems = [];
     let currentCategory = 'attack';
+    let currentHeroData = {};
     
-    // Sample items data (later will be loaded from database)
-    const itemsData = {
-        attack: [
-            { id: 1, name: 'Blade of Despair', price: 3010, image: '../images/ITEM/Attack/6. Blade of Despair/icon.png' },
-            { id: 2, name: 'Endless Battle', price: 2470, image: '../images/ITEM/Attack/9. Endless Battle/icon.png' },
-            { id: 3, name: 'Haas\'s Claws', price: 2050, image: '../images/ITEM/Attack/11. Haas\'s Claws/icon.png' },
-            { id: 4, name: 'Malefic Roar', price: 2060, image: '../images/ITEM/Attack/12. Malefic Roar/icon.png' },
-            { id: 5, name: 'Windtalker', price: 1820, image: '../images/ITEM/Attack/8. Windtalker/icon.png' },
-            { id: 6, name: 'Hunter Strike', price: 2010, image: '../images/ITEM/Attack/5. Hunter Strike/icon.png' }
-        ],
-        defense: [
-            { id: 7, name: 'Radiant Armor', price: 1980, image: '../images/ITEM/Defense/2. Radiant Armor/icon.png' },
-            { id: 8, name: 'Twilight Armor', price: 2000, image: '../images/ITEM/Defense/3. Twilight Armor/icon.png' },
-            { id: 9, name: 'Immortality', price: 2120, image: '../images/ITEM/Defense/5. Immortality/icon.png' },
-            { id: 10, name: 'Athena\'s Shield', price: 2150, image: '../images/ITEM/Defense/7. Athena\'s Shield/icon.png' },
-            { id: 11, name: 'Dominance Ice', price: 2010, image: '../images/ITEM/Defense/6. Dominance Ice/icon.png' },
-            { id: 12, name: 'Oracle', price: 1980, image: '../images/ITEM/Defense/8. Oracle/icon.png' }
-        ],
-        magic: [
-            { id: 13, name: 'Lightning Truncheon', price: 2250, image: '../images/ITEM/Magic/4. Lightning Truncheon/icon.png' },
-            { id: 14, name: 'Blood Wings', price: 3000, image: '../images/ITEM/Magic/5. Blood Wings/icon.png' },
-            { id: 15, name: 'Concentrated Energy', price: 2250, image: '../images/ITEM/Magic/9. Concentrated Energy/icon.png' },
-            { id: 16, name: 'Holy Crystal', price: 2180, image: '../images/ITEM/Magic/10. Holy Crystal/icon.png' },
-            { id: 17, name: 'Divine Glaive', price: 1970, image: '../images/ITEM/Magic/11. Divine Glaive/icon.png' },
-            { id: 18, name: 'Clock of Destiny', price: 1950, image: '../images/ITEM/Magic/12. Clock of Destiny/icon.png' }
-        ],
-        movement: [
-            { id: 19, name: 'Swift Boots', price: 720, image: '../images/ITEM/Movement/1. Swift Boots/icon.png' },
-            { id: 20, name: 'Warrior Boots', price: 720, image: '../images/ITEM/Movement/2. Warrior Boots/icon.png' },
-            { id: 21, name: 'Arcane Boots', price: 720, image: '../images/ITEM/Movement/3. Arcane Boots/icon.png' },
-            { id: 22, name: 'Tough Boots', price: 720, image: '../images/ITEM/Movement/4. Tough Boots/icon.png' },
-            { id: 23, name: 'Rapid Boots', price: 720, image: '../images/ITEM/Movement/5. Rapid Boots/icon.png' },
-            { id: 24, name: 'Magic Shoes', price: 720, image: '../images/ITEM/Movement/6. Magic Shoes/icon.png' }
-        ],
-        jungle: [
-            { id: 25, name: 'Flame Retribution', price: 0, image: '../images/ITEM/Jungle/1. Flame Retribution/icon.png' },
-            { id: 26, name: 'Ice Retribution', price: 0, image: '../images/ITEM/Jungle/2. Ice Retribution/icon.png' },
-            { id: 27, name: 'Bloody Retribution', price: 0, image: '../images/ITEM/Jungle/3. Bloody Retribution/icon.png' }
-        ]
-    };
-
-    // Sample builds data (later will be loaded from database)
-    const sampleBuilds = {
-        official: [
-            {
-                id: 1,
-                name: 'Core Damage Build',
-                description: 'High damage output build focusing on critical strikes and attack speed',
-                items: [1, 2, 3],
-                likes: 15,
-                isLiked: false,
-                author: 'Admin',
-                created_at: '2024-01-15'
-            }
-        ],
-        user: [
-            {
-                id: 2,
-                name: 'Tank Killer Build',
-                description: 'Build designed to counter tank heroes with armor penetration',
-                items: [1, 4, 7],
-                likes: 8,
-                isLiked: true,
-                author: 'ProPlayer123',
-                created_at: '2024-01-20'
-            },
-            {
-                id: 3,
-                name: 'Balanced Build',
-                description: 'Well-rounded build for various situations',
-                items: [2, 8, 13],
-                likes: 12,
-                isLiked: false,
-                author: 'MLGamer',
-                created_at: '2024-01-18'
-            }
-        ]
-    };
+    // Ganti itemsData hardcoded dengan data dari PHP
+    window.itemsData = <?php echo json_encode($items_by_category); ?>;
+    let itemsData = window.itemsData;
 
     document.getElementById('search-hero').addEventListener('input', function() {
         const val = this.value.trim().toLowerCase();
@@ -818,7 +764,8 @@ if ($show_detail && $hero_detail) {
 
     function showBuildSlide(heroId, heroName, heroRole, heroLane, heroTier, heroImage) {
         currentHeroId = heroId;
-        loadBuildData(heroId, heroName, heroRole, heroLane, heroTier, heroImage);
+        currentHeroData = { heroName, heroRole, heroLane, heroTier, heroImage };
+        loadBuildsAjax(heroId, heroName, heroRole, heroLane, heroTier, heroImage);
         document.getElementById('build-slide').classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -828,7 +775,26 @@ if ($show_detail && $hero_detail) {
         document.body.style.overflow = 'auto';
     }
 
-    function loadBuildData(heroId, heroName, heroRole, heroLane, heroTier, heroImage) {
+    function loadBuildsAjax(heroId, heroName, heroRole, heroLane, heroTier, heroImage) {
+        fetch('get_builds.php?hero_id=' + heroId)
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) {
+                    alert('Gagal load builds: ' + (data.error || 'Unknown error'));
+                    return;
+                }
+                renderBuildSlide(
+                    heroName || currentHeroData.heroName,
+                    heroRole || currentHeroData.heroRole,
+                    heroLane || currentHeroData.heroLane,
+                    heroTier || currentHeroData.heroTier,
+                    heroImage || currentHeroData.heroImage
+                );
+            })
+            .catch(() => alert('Gagal load builds.'));
+    }
+
+    function renderBuildSlide(heroName, heroRole, heroLane, heroTier, heroImage) {
         const content = `
             <div class="build-slide-hero-info">
                 <img src="../${heroImage}" alt="${heroName}" class="build-slide-hero-img">
@@ -840,15 +806,13 @@ if ($show_detail && $hero_detail) {
                 </div>
             </div>
             <button class="build-create-btn" onclick="openBuildForm()">+ Create your own build</button>
-            
             <div class="build-section">
                 <div class="build-section-title">Official Builds</div>
-                ${sampleBuilds.official.map(build => createBuildCard(build, 'official')).join('')}
+                ${data.official.length > 0 ? data.official.map(build => createBuildCard(build, 'official')).join('') : '<div style=\'color:#bfc8e2\'>Belum ada official build.</div>'}
             </div>
-            
             <div class="build-section">
                 <div class="build-section-title">User Builds</div>
-                ${sampleBuilds.user.map(build => createBuildCard(build, 'user')).join('')}
+                ${data.user.length > 0 ? data.user.map(build => createBuildCard(build, 'user')).join('') : '<div style=\'color:#bfc8e2\'>Belum ada user build.</div>'}
             </div>
         `;
         document.getElementById('build-slide-content').innerHTML = content;
@@ -859,7 +823,6 @@ if ($show_detail && $hero_detail) {
             const item = findItemById(itemId);
             return item ? `<img src="${item.image}" alt="${item.name}" title="${item.name}">` : '';
         }).join('');
-        
         return `
             <div class="build-card">
                 <div class="build-card-title">${build.name}</div>
@@ -868,8 +831,8 @@ if ($show_detail && $hero_detail) {
                     ${itemsHtml}
                 </div>
                 <div class="build-actions">
-                    <button class="build-action-btn ${build.isLiked ? 'liked' : ''}" onclick="toggleLike(${build.id}, '${type}')">
-                        <i class="fas fa-heart"></i> ${build.likes}
+                    <button class="build-action-btn" onclick="toggleLikeAjax(${build.id}, '${type}', this)">
+                        <i class="fas fa-heart"></i> <span>${build.likes || 0}</span>
                     </button>
                     <button class="build-action-btn" onclick="copyBuild(${build.id})">
                         <i class="fas fa-copy"></i> Copy
@@ -996,14 +959,35 @@ if ($show_detail && $hero_detail) {
         }
     }
 
-    function toggleLike(buildId, type) {
-        // Toggle like status (later will be connected to database)
-        const button = event.target.closest('.build-action-btn');
-        button.classList.toggle('liked');
-        
-        const likeCount = button.querySelector('i').nextSibling;
-        const currentLikes = parseInt(likeCount.textContent.trim());
-        likeCount.textContent = button.classList.contains('liked') ? currentLikes + 1 : currentLikes - 1;
+    function toggleLikeAjax(buildId, type, btn) {
+        // Toggle like/unlike
+        const liked = btn.classList.contains('liked');
+        fetch('like_build.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                build_id: buildId,
+                action: liked ? 'unlike' : 'like'
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.success) {
+                alert('Gagal like/unlike: ' + (data.error || 'Unknown error'));
+                return;
+            }
+            // Update UI
+            let countSpan = btn.querySelector('span');
+            let count = parseInt(countSpan.textContent);
+            if (liked) {
+                btn.classList.remove('liked');
+                countSpan.textContent = count - 1;
+            } else {
+                btn.classList.add('liked');
+                countSpan.textContent = count + 1;
+            }
+        })
+        .catch(() => alert('Gagal like/unlike build.'));
     }
 
     function copyBuild(buildId) {
@@ -1038,20 +1022,28 @@ if ($show_detail && $hero_detail) {
                 return;
             }
             
-            // Create build (later will be saved to database)
-            console.log('Creating build:', {
-                name: buildName,
-                description: buildDescription,
-                items: selectedItems,
-                heroId: currentHeroId
-            });
-            
-            alert('Build created successfully!');
-            closeBuildForm();
-            // Refresh build list
-            if (currentHeroId) {
-                // Reload build data
-            }
+            fetch('create_build.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    hero_id: currentHeroId,
+                    name: buildName,
+                    description: buildDescription,
+                    items: selectedItems
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) {
+                    alert('Gagal membuat build: ' + (data.error || 'Unknown error'));
+                    return;
+                }
+                alert('Build created successfully!');
+                closeBuildForm();
+                // Reload builds, pastikan data hero tetap ada
+                loadBuildsAjax(currentHeroId, currentHeroData.heroName, currentHeroData.heroRole, currentHeroData.heroLane, currentHeroData.heroTier, currentHeroData.heroImage);
+            })
+            .catch(() => alert('Gagal membuat build.'));
         });
 
         // Close slide when clicking outside

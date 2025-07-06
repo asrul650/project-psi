@@ -9,6 +9,8 @@ if ($hero_id <= 0) {
     exit();
 }
 
+error_log('GET_BUILDS: Session = ' . print_r($_SESSION, true));
+
 // Official builds (admin)
 $official = [];
 $stmt = $conn->prepare('SELECT b.id, b.name, b.description, b.created_at, u.username as author FROM builds b JOIN users u ON b.user_id = u.id WHERE b.hero_id = ? AND b.is_official = 1');

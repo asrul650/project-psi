@@ -26,8 +26,15 @@ if ($res && $row = $res->fetch_assoc()) $total_users = $row['total'];
 // Query pending builds (jika ada tabel builds, jika tidak tampilkan 0)
 $total_pending_builds = 0;
 if ($conn->query("SHOW TABLES LIKE 'builds'")->num_rows) {
-    $res = $conn->query("SELECT COUNT(*) as total FROM builds WHERE status='pending'");
-    if ($res && $row = $res->fetch_assoc()) $total_pending_builds = $row['total'];
+    // Cek apakah kolom 'status' ada di tabel builds
+    $col_check = $conn->query("SHOW COLUMNS FROM builds LIKE 'status'");
+    if ($col_check && $col_check->num_rows) {
+        $res = $conn->query("SELECT COUNT(*) as total FROM builds WHERE status='pending'");
+        if ($res && $row = $res->fetch_assoc()) $total_pending_builds = $row['total'];
+    } else {
+        // Jika tidak ada kolom status, tampilkan 0
+        $total_pending_builds = 0;
+    }
 }
 ?>
 <!DOCTYPE html>
