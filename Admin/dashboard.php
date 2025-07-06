@@ -93,7 +93,7 @@ if ($conn->query("SHOW TABLES LIKE 'builds'")->num_rows) {
                     <div class="stat-card">
                         <h4>Pending Builds</h4>
                         <p class="stat-number"><?php echo $total_pending_builds; ?></p>
-                        <a href="#" class="card-link">View Builds</a>
+                        <a href="manage_builds.php" class="card-link">View Builds</a>
                     </div>
                 </div>
             </div>
