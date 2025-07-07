@@ -185,7 +185,7 @@ $tier_order = ['SS', 'S', 'A', 'B', 'C', 'D'];
                 <li><a href="homepage.php">Home</a></li>
                 <li><a href="hero.php">Hero</a></li>
                 <li><a href="Item.php">Item</a></li>
-                <li><a href="#">Build</a></li>
+                <li><a href="build.php">Build</a></li>
                 <li class="active"><a href="tier_hero.php">Tier Hero</a></li>
                 <li><a href="../includes/logout.php">Logout</a></li>
             </ul>
