@@ -65,12 +65,41 @@ if ($item_res && $item_res->num_rows > 0) {
             $items_by_category[$cat][] = [
                 'id' => (int)$item['id'],
                 'name' => $item['name'],
-                'price' => (int)$item['price'],
+                'price' => isset($item['price']) ? (int)$item['price'] : 0,
                 'image' => $item['image_path'] ? '../' . $item['image_path'] : '../assets/images/default_item.png'
             ];
         }
     }
 }
+
+// Ambil data emblem dari folder
+function get_emblems($dir, $section) {
+    $base = "images/LOGO/$dir/";
+    if (!is_dir($base)) return [];
+    $files = array_diff(scandir($base), ['.','..']);
+    $result = [];
+    foreach ($files as $f) {
+        if (preg_match('/\.(png|jpg|jpeg|webp)$/i', $f)) {
+            $name = pathinfo($f, PATHINFO_FILENAME);
+            $result[] = [
+                'name' => ucwords(str_replace(['_', '-'], ' ', $name)),
+                'file' => $base . $f,
+                'section' => $section
+            ];
+        }
+    }
+    return $result;
+}
+$main_emblems = get_emblems('Main Emblems', 'main');
+$ability1 = get_emblems('Ability Emblems - Section 1', 'ability1');
+$ability2 = get_emblems('Ability Emblems - Section 2', 'ability2');
+$ability3 = get_emblems('Ability Emblems - Section 3', 'ability3');
+$emblemsData = [
+    'main' => $main_emblems,
+    'ability1' => $ability1,
+    'ability2' => $ability2,
+    'ability3' => $ability3
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -605,6 +634,21 @@ if ($item_res && $item_res->num_rows > 0) {
                 grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
         }
+        .build-form-tabs { display: flex; gap: 8px; margin-bottom: 18px; }
+        .build-form-tab { flex:1; background: #ececec; color: #23283a; border: none; border-radius: 12px 12px 0 0; padding: 12px 0; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: background 0.2s; }
+        .build-form-tab.active { background: #ffe600; color: #23283a; }
+        .build-form-tab-content { background: #fff; border-radius: 0 0 12px 12px; padding: 18px 8px; }
+        .emblem-section { margin-bottom: 18px; }
+        .emblem-section-title { color: #ffe600; font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; }
+        .emblem-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+        .emblem-card { background: #f5f6fa; border: 2px solid #ececec; border-radius: 10px; padding: 10px 8px; text-align: center; cursor: pointer; width: 90px; transition: border 0.2s, box-shadow 0.2s; }
+        .emblem-card.selected, .emblem-card:hover { border: 2px solid #ffe600; box-shadow: 0 2px 8px #ffe60033; }
+        .emblem-card img { width: 48px; height: 48px; object-fit: contain; margin-bottom: 6px; }
+        .emblem-name { color: #23283a; font-size: 0.85rem; font-weight: 600; }
+        .build-preview-emblems { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+        .emblem-preview { display: flex; flex-direction: column; align-items: center; gap: 4px; background: #fffbe6; border-radius: 8px; padding: 8px 10px; }
+        .emblem-preview img { width: 32px; height: 32px; }
+        .emblem-preview span { color: #23283a; font-size: 0.8rem; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -688,16 +732,39 @@ if ($item_res && $item_res->num_rows > 0) {
                 </div>
                 
                 <div class="build-form-group">
-                    <label class="build-form-label">Select Items</label>
-                    <div class="build-category-tabs">
-                        <button type="button" class="build-category-tab active" data-category="attack">Attack</button>
-                        <button type="button" class="build-category-tab" data-category="defense">Defense</button>
-                        <button type="button" class="build-category-tab" data-category="magic">Magic</button>
-                        <button type="button" class="build-category-tab" data-category="movement">Movement</button>
-                        <button type="button" class="build-category-tab" data-category="jungle">Jungle</button>
+                    <div class="build-form-tabs">
+                        <button type="button" class="build-form-tab active" data-tab="items">Items</button>
+                        <button type="button" class="build-form-tab" data-tab="emblems">Emblems</button>
                     </div>
-                    <div class="build-items-grid" id="build-items-grid">
-                        <!-- Items will be loaded here -->
+                    <div class="build-form-tab-content" id="tab-items">
+                        <div class="build-category-tabs">
+                            <button type="button" class="build-category-tab active" data-category="attack">Attack</button>
+                            <button type="button" class="build-category-tab" data-category="defense">Defense</button>
+                            <button type="button" class="build-category-tab" data-category="magic">Magic</button>
+                            <button type="button" class="build-category-tab" data-category="movement">Movement</button>
+                            <button type="button" class="build-category-tab" data-category="jungle">Jungle</button>
+                        </div>
+                        <div class="build-items-grid" id="build-items-grid">
+                            <!-- Items will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="build-form-tab-content" id="tab-emblems" style="display:none;">
+                        <div class="emblem-section">
+                            <div class="emblem-section-title">Main Emblems</div>
+                            <div class="emblem-grid" id="main-emblem-grid"></div>
+                        </div>
+                        <div class="emblem-section">
+                            <div class="emblem-section-title">Ability Emblems - Section 1</div>
+                            <div class="emblem-grid" id="ability1-emblem-grid"></div>
+                        </div>
+                        <div class="emblem-section">
+                            <div class="emblem-section-title">Ability Emblems - Section 2</div>
+                            <div class="emblem-grid" id="ability2-emblem-grid"></div>
+                        </div>
+                        <div class="emblem-section">
+                            <div class="emblem-section-title">Ability Emblems - Section 3</div>
+                            <div class="emblem-grid" id="ability3-emblem-grid"></div>
+                        </div>
                     </div>
                 </div>
                 
@@ -705,6 +772,10 @@ if ($item_res && $item_res->num_rows > 0) {
                     <div class="build-preview-title">Selected Items</div>
                     <div class="build-preview-items" id="build-preview-items">
                         <!-- Selected items will be shown here -->
+                    </div>
+                    <div class="build-preview-title" style="margin-top:18px;">Selected Emblems</div>
+                    <div class="build-preview-emblems" id="build-preview-emblems">
+                        <!-- Selected emblems will be shown here -->
                     </div>
                 </div>
                 
@@ -754,6 +825,8 @@ if ($item_res && $item_res->num_rows > 0) {
     window.itemsData = <?php echo json_encode($items_by_category); ?>;
     let itemsData = window.itemsData;
 
+    window.emblemsData = <?php echo json_encode($emblemsData); ?>;
+
     document.getElementById('search-hero').addEventListener('input', function() {
         const val = this.value.trim().toLowerCase();
         document.querySelectorAll('#build-hero-grid .build-hero-card').forEach(card => {
@@ -776,13 +849,22 @@ if ($item_res && $item_res->num_rows > 0) {
     }
 
     function loadBuildsAjax(heroId, heroName, heroRole, heroLane, heroTier, heroImage) {
-        fetch('get_builds.php?hero_id=' + heroId)
-            .then(res => res.json())
-            .then(data => {
+        fetch('./get_builds.php?hero_id=' + heroId)
+            .then(res => res.text())
+            .then(text => {
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (e) {
+                    console.error('Response bukan JSON valid:', text);
+                    alert('Gagal load builds: Response bukan JSON valid. Cek console untuk detail.');
+                    return;
+                }
                 if (!data.success) {
                     alert('Gagal load builds: ' + (data.error || 'Unknown error'));
                     return;
                 }
+                window.lastBuildsData = data;
                 renderBuildSlide(
                     heroName || currentHeroData.heroName,
                     heroRole || currentHeroData.heroRole,
@@ -791,10 +873,19 @@ if ($item_res && $item_res->num_rows > 0) {
                     heroImage || currentHeroData.heroImage
                 );
             })
-            .catch(() => alert('Gagal load builds.'));
+            .catch(err => {
+                console.error('Fetch error:', err);
+                alert('Gagal load builds (fetch error).');
+            });
     }
 
     function renderBuildSlide(heroName, heroRole, heroLane, heroTier, heroImage) {
+        heroName = heroName || '-';
+        heroRole = heroRole || '-';
+        heroLane = heroLane || '-';
+        heroTier = heroTier || '-';
+        heroImage = heroImage || 'assets/images/default_hero.png';
+        let data = window.lastBuildsData || { official: [], user: [] };
         const content = `
             <div class="build-slide-hero-info">
                 <img src="../${heroImage}" alt="${heroName}" class="build-slide-hero-img">
@@ -808,11 +899,11 @@ if ($item_res && $item_res->num_rows > 0) {
             <button class="build-create-btn" onclick="openBuildForm()">+ Create your own build</button>
             <div class="build-section">
                 <div class="build-section-title">Official Builds</div>
-                ${data.official.length > 0 ? data.official.map(build => createBuildCard(build, 'official')).join('') : '<div style=\'color:#bfc8e2\'>Belum ada official build.</div>'}
+                ${data.official && data.official.length > 0 ? data.official.map(build => createBuildCard(build, 'official')).join('') : '<div style=\'color:#bfc8e2\'>Belum ada official build.</div>'}
             </div>
             <div class="build-section">
                 <div class="build-section-title">User Builds</div>
-                ${data.user.length > 0 ? data.user.map(build => createBuildCard(build, 'user')).join('') : '<div style=\'color:#bfc8e2\'>Belum ada user build.</div>'}
+                ${data.user && data.user.length > 0 ? data.user.map(build => createBuildCard(build, 'user')).join('') : '<div style=\'color:#bfc8e2\'>Belum ada user build.</div>'}
             </div>
         `;
         document.getElementById('build-slide-content').innerHTML = content;
@@ -1059,7 +1150,59 @@ if ($item_res && $item_res->num_rows > 0) {
                 closeBuildForm();
             }
         });
+
+        // Tab switching
+        document.querySelectorAll('.build-form-tab').forEach(btn => {
+            btn.addEventListener('click', function() {
+                switchBuildTab(this.getAttribute('data-tab'));
+            });
+        });
+        // Render emblems
+        renderEmblemGrid('main', 'main-emblem-grid');
+        renderEmblemGrid('ability1', 'ability1-emblem-grid');
+        renderEmblemGrid('ability2', 'ability2-emblem-grid');
+        renderEmblemGrid('ability3', 'ability3-emblem-grid');
     });
+
+    // Emblem selection state
+    let selectedEmblems = { main: null, ability1: null, ability2: null, ability3: null };
+
+    function renderEmblemGrid(section, gridId) {
+        const grid = document.getElementById(gridId);
+        grid.innerHTML = window.emblemsData[section].map((emblem, idx) => `
+            <div class="emblem-card${selectedEmblems[section] === emblem.file ? ' selected' : ''}" onclick="selectEmblem('${section}', '${emblem.file}', '${emblem.name}')">
+                <img src="../${emblem.file}" alt="${emblem.name}">
+                <div class="emblem-name">${emblem.name}</div>
+            </div>
+        `).join('');
+    }
+
+    function selectEmblem(section, file, name) {
+        selectedEmblems[section] = file;
+        renderEmblemGrid(section, section + '-emblem-grid');
+        updateEmblemPreview();
+    }
+
+    function updateEmblemPreview() {
+        const preview = document.getElementById('build-preview-emblems');
+        preview.innerHTML = '';
+        Object.keys(selectedEmblems).forEach(section => {
+            if (selectedEmblems[section]) {
+                const emblem = window.emblemsData[section].find(e => e.file === selectedEmblems[section]);
+                if (emblem) {
+                    preview.innerHTML += `<div class='emblem-preview'><img src='../${emblem.file}' alt='${emblem.name}'><span>${emblem.name}</span></div>`;
+                }
+            }
+        });
+    }
+
+    // Tab logic
+    function switchBuildTab(tab) {
+        document.querySelectorAll('.build-form-tab').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.build-form-tab-content').forEach(div => div.style.display = 'none');
+        document.querySelector('.build-form-tab[data-tab="' + tab + '"]').classList.add('active');
+        document.getElementById('tab-' + tab).style.display = '';
+    }
     </script>
 </body>
 </html> 
