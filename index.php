@@ -65,7 +65,7 @@ if (isset($_SESSION['user_id_user'])) {
         <!-- News Section -->
         <section class="news-section" id="news" style="background:var(--bg-dark);color:var(--light-text);padding:60px 0 40px 0;">
             <h2 style="text-align:center;font-size:2.5rem;margin-bottom:40px;">Berita Terbaru</h2>
-            <div class="feature-grid" style="grid-template-columns:1fr 1fr 1fr;gap:32px;">
+            <div class="feature-grid" style="text-align:center;grid-template-columns:repeat(4, 1fr);gap:32px;">
                 <div class="feature-item" style="background:rgba(34,34,40,0.7);backdrop-filter:blur(4px);">
                     <div style="font-size:2.2rem;margin-bottom:10px;"><i class="fas fa-bolt"></i></div>
                     <h4>Patch 1.8.90: Buff & Nerf Terbaru!</h4>
@@ -153,8 +153,7 @@ if (isset($_SESSION['user_id_user'])) {
                     <div class="spotlight-img-wrap">
                         <img src="images/HERO/Fighter/Kalea/kalea.png" alt="Kalea">
                         <div class="spotlight-info">
-                            <h4>Kalea</h4>
-                            <span class="role-tag">Support/Fighter</span>
+                        <h4>Kalea<span class="role-tag">Support / Fighter</span></h4>
                             <p>Support/Fighter yang sedang naik daun di meta terbaru! Memiliki kemampuan heal dan crowd control yang kuat.</p>
                             <a href="includes/auth.php" class="btn-detail">Lihat Detail</a>
                         </div>
@@ -164,8 +163,7 @@ if (isset($_SESSION['user_id_user'])) {
                     <div class="spotlight-img-wrap">
                         <img src="images/HERO/Mage/Lunox/lunoxx.png" alt="Lunox">
                         <div class="spotlight-info">
-                            <h4>Lunox</h4>
-                            <span class="role-tag">Mage</span>
+                            <h4>Lunox<span class="role-tag">Mage</span></h4>
                             <p>Mage spesialis burst damage dan fleksibilitas mode cahaya/gelap, sangat efektif di mid lane.</p>
                             <a href="includes/auth.php" class="btn-detail">Lihat Detail</a>
                         </div>
@@ -175,8 +173,7 @@ if (isset($_SESSION['user_id_user'])) {
                     <div class="spotlight-img-wrap">
                         <img src="images/HERO/Support/Diggie/Diggie.png" alt="Diggie">
                         <div class="spotlight-info">
-                            <h4>Diggie</h4>
-                            <span class="role-tag">Support</span>
+                        <h4>Diggie<span class="role-tag">Support</span></h4>
                             <p>Support spesialis anti crowd control, sangat efektif melindungi tim dari efek stun dan lock musuh.</p>
                             <a href="includes/auth.php" class="btn-detail">Lihat Detail</a>
                         </div>

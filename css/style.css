@@ -162,9 +162,9 @@ main {
 
 .feature-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ukuran kartu fitur lebih besar */
-    gap: 50px; /* Jarak antar kartu fitur lebih besar */
-    max-width: 1200px; /* Max width lebih besar */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ukuran kartu fitur lebih besar */
+    gap: 20px; /* Jarak antar kartu fitur lebih besar */
+    max-width: 1300px; /* Max width lebih besar */
     margin: 0 auto;
 }
 
@@ -374,7 +374,7 @@ footer {
     font-family: 'Oswald', sans-serif;
     font-size: 3rem;
     margin-bottom: 50px;
-    color: var(--primary-color);
+    color: var(--secondary-color);
     text-shadow: 0 0 10px rgba(123, 31, 162, 0.4);
 }
 
@@ -430,7 +430,7 @@ footer {
     font-family: 'Oswald', sans-serif;
     font-size: 2.1rem;
     font-weight: 700;
-    color: var(--secondary-color);
+    color: var(--light-text);
     margin: 0 0 8px 0;
     letter-spacing: 1.2px;
     text-shadow: 0 2px 12px rgba(0,0,0,0.18);
@@ -438,7 +438,7 @@ footer {
 
 .spotlight-card .role-tag {
     display: inline-block;
-    background: linear-gradient(90deg, #7B1FA2 0%, #FFEB3B 100%);
+    background: linear-gradient(45deg, #ffd700, #ffed4a);
     color: #222;
     padding: 5px 16px;
     border-radius: 16px;
