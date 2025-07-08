@@ -16,6 +16,27 @@ $filter_hero = isset($_GET['hero_id']) ? intval($_GET['hero_id']) : 0;
 $where = $filter_hero ? 'WHERE b.hero_id = ' . $filter_hero : '';
 $sql = "SELECT b.*, h.name AS hero_name, u.username FROM builds b JOIN heroes h ON b.hero_id = h.id JOIN users u ON b.user_id = u.id $where ORDER BY b.created_at DESC";
 $builds = $conn->query($sql);
+if (isset($_POST['delete_build_id'])) {
+    $build_id = intval($_POST['delete_build_id']);
+    // Hapus relasi build_items, build_emblems, build_likes terlebih dahulu
+    $stmt = $conn->prepare('DELETE FROM build_items WHERE build_id = ?');
+    $stmt->bind_param('i', $build_id);
+    $stmt->execute();
+    $stmt = $conn->prepare('DELETE FROM build_emblems WHERE build_id = ?');
+    $stmt->bind_param('i', $build_id);
+    $stmt->execute();
+    $stmt = $conn->prepare('DELETE FROM build_likes WHERE build_id = ?');
+    $stmt->bind_param('i', $build_id);
+    $stmt->execute();
+    // Hapus build utama
+    $stmt = $conn->prepare('DELETE FROM builds WHERE id = ?');
+    $stmt->bind_param('i', $build_id);
+    if ($stmt->execute()) {
+        $delete_message = '<div class="alert alert-success">Build berhasil dihapus.</div>';
+    } else {
+        $delete_message = '<div class="alert alert-danger">Gagal menghapus build.</div>';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

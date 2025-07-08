@@ -912,7 +912,7 @@ $emblemsData = [
     function createBuildCard(build, type) {
         const itemsHtml = build.items.map(itemId => {
             const item = findItemById(itemId);
-            return item ? `<img src="${item.image}" alt="${item.name}" title="${item.name}">` : '';
+            return item ? `<img src="${item.image}" alt="${item.name}" title="${item.name}" onerror="this.src='../assets/images/default_item.png'">` : '';
         }).join('');
         return `
             <div class="build-card">
@@ -925,14 +925,6 @@ $emblemsData = [
                     <button class="build-action-btn" onclick="toggleLikeAjax(${build.id}, '${type}', this)">
                         <i class="fas fa-heart"></i> <span>${build.likes || 0}</span>
                     </button>
-                    <button class="build-action-btn" onclick="copyBuild(${build.id})">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
-                    ${type === 'user' ? `
-                        <button class="build-action-btn" onclick="editBuild(${build.id})">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                    ` : ''}
                 </div>
                 <div class="build-stats">
                     <div class="build-stat">
@@ -949,7 +941,11 @@ $emblemsData = [
     function findItemById(itemId) {
         for (let category in itemsData) {
             const item = itemsData[category].find(item => item.id === itemId);
-            if (item) return item;
+            if (item) {
+                // Normalisasi path gambar
+                item.image = normalizePath(item.image);
+                return item;
+            }
         }
         return null;
     }
@@ -974,7 +970,7 @@ $emblemsData = [
         
         grid.innerHTML = items.map(item => `
             <div class="build-item-card" onclick="toggleItemSelection(${item.id})" data-item-id="${item.id}">
-                <img src="${item.image}" alt="${item.name}">
+                <img src="${normalizePath(item.image)}" alt="${item.name}" onerror="this.src='../assets/images/default_item.png'">
                 <div class="item-name">${item.name}</div>
                 <div class="item-price">${item.price > 0 ? item.price + ' Gold' : 'Free'}</div>
             </div>
@@ -1171,7 +1167,7 @@ $emblemsData = [
         const grid = document.getElementById(gridId);
         grid.innerHTML = window.emblemsData[section].map((emblem, idx) => `
             <div class="emblem-card${selectedEmblems[section] === emblem.file ? ' selected' : ''}" onclick="selectEmblem('${section}', '${emblem.file}', '${emblem.name}')">
-                <img src="../${emblem.file}" alt="${emblem.name}">
+                <img src="../${emblem.file}" alt="${emblem.name}" onerror="this.src='../assets/images/default_item.png'">
                 <div class="emblem-name">${emblem.name}</div>
             </div>
         `).join('');
@@ -1202,6 +1198,13 @@ $emblemsData = [
         document.querySelectorAll('.build-form-tab-content').forEach(div => div.style.display = 'none');
         document.querySelector('.build-form-tab[data-tab="' + tab + '"]').classList.add('active');
         document.getElementById('tab-' + tab).style.display = '';
+    }
+
+    function normalizePath(path) {
+        if (!path) return '../assets/images/default_item.png';
+        if (path.startsWith('..')) return path;
+        if (path.startsWith('/')) return '..' + path;
+        return '../' + path;
     }
     </script>
 </body>
