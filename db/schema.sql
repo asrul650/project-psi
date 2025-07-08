@@ -48,6 +48,19 @@ CREATE TABLE hero_counters (
 );
 
 -- =================================================================
+-- TABLE: build_likes
+-- MENYIMPAN DATA LIKE PADA BUILD OLEH USER
+-- =================================================================
+CREATE TABLE IF NOT EXISTS build_likes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    build_id INT NOT NULL,
+    user_id INT NOT NULL,
+    liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (build_id) REFERENCES builds(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- =================================================================
 -- SEED DATA: DEFAULT ADMIN USER
 -- =================================================================
 -- Default admin user for initial login

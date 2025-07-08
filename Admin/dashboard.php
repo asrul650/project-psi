@@ -36,6 +36,16 @@ if ($conn->query("SHOW TABLES LIKE 'builds'")->num_rows) {
         $total_pending_builds = 0;
     }
 }
+
+// Query 5 build dengan like terbanyak
+$top_builds = [];
+$res = $conn->query("SELECT b.id, b.name, h.name AS hero_name, COUNT(bl.id) AS like_count FROM builds b JOIN heroes h ON b.hero_id = h.id LEFT JOIN build_likes bl ON b.id = bl.build_id GROUP BY b.id ORDER BY like_count DESC, b.created_at DESC LIMIT 5");
+while ($row = $res && $res->fetch_assoc() ? $row = $res->fetch_assoc() : false) $top_builds[] = $row;
+
+// Query 5 hero yang build-nya paling sering di-like
+$top_heroes = [];
+$res = $conn->query("SELECT h.id, h.name, COUNT(bl.id) AS total_likes FROM heroes h JOIN builds b ON h.id = b.hero_id LEFT JOIN build_likes bl ON b.id = bl.build_id GROUP BY h.id ORDER BY total_likes DESC, h.name ASC LIMIT 5");
+while ($row = $res && $res->fetch_assoc() ? $row = $res->fetch_assoc() : false) $top_heroes[] = $row;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +104,34 @@ if ($conn->query("SHOW TABLES LIKE 'builds'")->num_rows) {
                         <h4>Pending Builds</h4>
                         <p class="stat-number"><?php echo $total_pending_builds; ?></p>
                         <a href="manage_builds.php" class="card-link">View Builds</a>
+                    </div>
+                </div>
+
+                <div class="card-container" style="margin-top:32px;">
+                    <div class="stat-card" style="flex:2;min-width:320px;">
+                        <h4>Top 5 Builds by Likes</h4>
+                        <table style="width:100%;font-size:0.98em;">
+                            <tr><th>Build Name</th><th>Hero</th><th>Likes</th></tr>
+                            <?php foreach ($top_builds as $b): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($b['name']) ?></td>
+                                    <td><?= htmlspecialchars($b['hero_name']) ?></td>
+                                    <td><?= $b['like_count'] ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                    <div class="stat-card" style="flex:1;min-width:220px;">
+                        <h4>Top 5 Heroes by Build Likes</h4>
+                        <table style="width:100%;font-size:0.98em;">
+                            <tr><th>Hero</th><th>Total Likes</th></tr>
+                            <?php foreach ($top_heroes as $h): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($h['name']) ?></td>
+                                    <td><?= $h['total_likes'] ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
                     </div>
                 </div>
             </div>

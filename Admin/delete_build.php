@@ -1,7 +1,7 @@
 <?php
 require_once '../includes/db_connect.php';
 session_start();
-if (!isset($_SESSION['user_id_user']) || ($_SESSION['role_user'] ?? '') !== 'admin') {
+if (!isset($_SESSION['user_id_admin']) || ($_SESSION['role_admin'] ?? '') !== 'admin') {
     header('Location: login.php');
     exit();
 }
@@ -15,5 +15,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $conn->query('DELETE FROM builds WHERE id = ' . $build_id);
     }
 }
-header('Location: builds_admin.php');
+header('Location: manage_builds.php');
 exit(); 

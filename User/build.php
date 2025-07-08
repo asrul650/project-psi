@@ -734,7 +734,6 @@ $emblemsData = [
                 <div class="build-form-group">
                     <div class="build-form-tabs">
                         <button type="button" class="build-form-tab active" data-tab="items">Items</button>
-                        <button type="button" class="build-form-tab" data-tab="emblems">Emblems</button>
                     </div>
                     <div class="build-form-tab-content" id="tab-items">
                         <div class="build-category-tabs">
@@ -748,34 +747,12 @@ $emblemsData = [
                             <!-- Items will be loaded here -->
                         </div>
                     </div>
-                    <div class="build-form-tab-content" id="tab-emblems" style="display:none;">
-                        <div class="emblem-section">
-                            <div class="emblem-section-title">Main Emblems</div>
-                            <div class="emblem-grid" id="main-emblem-grid"></div>
-                        </div>
-                        <div class="emblem-section">
-                            <div class="emblem-section-title">Ability Emblems - Section 1</div>
-                            <div class="emblem-grid" id="ability1-emblem-grid"></div>
-                        </div>
-                        <div class="emblem-section">
-                            <div class="emblem-section-title">Ability Emblems - Section 2</div>
-                            <div class="emblem-grid" id="ability2-emblem-grid"></div>
-                        </div>
-                        <div class="emblem-section">
-                            <div class="emblem-section-title">Ability Emblems - Section 3</div>
-                            <div class="emblem-grid" id="ability3-emblem-grid"></div>
-                        </div>
-                    </div>
                 </div>
                 
                 <div class="build-preview" id="build-preview" style="display: none;">
                     <div class="build-preview-title">Selected Items</div>
                     <div class="build-preview-items" id="build-preview-items">
                         <!-- Selected items will be shown here -->
-                    </div>
-                    <div class="build-preview-title" style="margin-top:18px;">Selected Emblems</div>
-                    <div class="build-preview-emblems" id="build-preview-emblems">
-                        <!-- Selected emblems will be shown here -->
                     </div>
                 </div>
                 
@@ -815,17 +792,13 @@ $emblemsData = [
     </footer>
 
     <script>
+    window.itemsData = <?php echo json_encode($items_by_category); ?>;
     // Global variables
     let currentHeroId = null;
     let selectedItems = [];
     let currentCategory = 'attack';
     let currentHeroData = {};
-    
-    // Ganti itemsData hardcoded dengan data dari PHP
-    window.itemsData = <?php echo json_encode($items_by_category); ?>;
     let itemsData = window.itemsData;
-
-    window.emblemsData = <?php echo json_encode($emblemsData); ?>;
 
     document.getElementById('search-hero').addEventListener('input', function() {
         const val = this.value.trim().toLowerCase();
@@ -1119,15 +1092,25 @@ $emblemsData = [
                     items: selectedItems
                 })
             })
-            .then(res => res.json())
-            .then(data => {
+            .then(async res => {
+                let data;
+                try {
+                    data = await res.json();
+                } catch (e) {
+                    alert('Gagal membuat build: Response bukan JSON valid. Status: ' + res.status);
+                    return;
+                }
                 if (!data.success) {
-                    alert('Gagal membuat build: ' + (data.error || 'Unknown error'));
+                    let msg = 'Gagal membuat build: ' + (data.error || 'Unknown error');
+                    if (data.debug) {
+                        msg += '\n\nDebug Info:\n' + JSON.stringify(data.debug, null, 2);
+                    }
+                    msg += '\n\nFull Response:\n' + JSON.stringify(data, null, 2);
+                    alert(msg);
                     return;
                 }
                 alert('Build created successfully!');
                 closeBuildForm();
-                // Reload builds, pastikan data hero tetap ada
                 loadBuildsAjax(currentHeroId, currentHeroData.heroName, currentHeroData.heroRole, currentHeroData.heroLane, currentHeroData.heroTier, currentHeroData.heroImage);
             })
             .catch(() => alert('Gagal membuat build.'));
@@ -1146,59 +1129,7 @@ $emblemsData = [
                 closeBuildForm();
             }
         });
-
-        // Tab switching
-        document.querySelectorAll('.build-form-tab').forEach(btn => {
-            btn.addEventListener('click', function() {
-                switchBuildTab(this.getAttribute('data-tab'));
-            });
-        });
-        // Render emblems
-        renderEmblemGrid('main', 'main-emblem-grid');
-        renderEmblemGrid('ability1', 'ability1-emblem-grid');
-        renderEmblemGrid('ability2', 'ability2-emblem-grid');
-        renderEmblemGrid('ability3', 'ability3-emblem-grid');
     });
-
-    // Emblem selection state
-    let selectedEmblems = { main: null, ability1: null, ability2: null, ability3: null };
-
-    function renderEmblemGrid(section, gridId) {
-        const grid = document.getElementById(gridId);
-        grid.innerHTML = window.emblemsData[section].map((emblem, idx) => `
-            <div class="emblem-card${selectedEmblems[section] === emblem.file ? ' selected' : ''}" onclick="selectEmblem('${section}', '${emblem.file}', '${emblem.name}')">
-                <img src="../${emblem.file}" alt="${emblem.name}" onerror="this.src='../assets/images/default_item.png'">
-                <div class="emblem-name">${emblem.name}</div>
-            </div>
-        `).join('');
-    }
-
-    function selectEmblem(section, file, name) {
-        selectedEmblems[section] = file;
-        renderEmblemGrid(section, section + '-emblem-grid');
-        updateEmblemPreview();
-    }
-
-    function updateEmblemPreview() {
-        const preview = document.getElementById('build-preview-emblems');
-        preview.innerHTML = '';
-        Object.keys(selectedEmblems).forEach(section => {
-            if (selectedEmblems[section]) {
-                const emblem = window.emblemsData[section].find(e => e.file === selectedEmblems[section]);
-                if (emblem) {
-                    preview.innerHTML += `<div class='emblem-preview'><img src='../${emblem.file}' alt='${emblem.name}'><span>${emblem.name}</span></div>`;
-                }
-            }
-        });
-    }
-
-    // Tab logic
-    function switchBuildTab(tab) {
-        document.querySelectorAll('.build-form-tab').forEach(btn => btn.classList.remove('active'));
-        document.querySelectorAll('.build-form-tab-content').forEach(div => div.style.display = 'none');
-        document.querySelector('.build-form-tab[data-tab="' + tab + '"]').classList.add('active');
-        document.getElementById('tab-' + tab).style.display = '';
-    }
 
     function normalizePath(path) {
         if (!path) return '../assets/images/default_item.png';
