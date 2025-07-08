@@ -37,6 +37,22 @@ if (isset($_POST['delete_build_id'])) {
         $delete_message = '<div class="alert alert-danger">Gagal menghapus build.</div>';
     }
 }
+if (isset($_POST['delete_all_dummy'])) {
+    // Ambil semua build dummy (nama LIKE 'Top Build Hero %')
+    $dummy_ids = [];
+    $res = $conn->query("SELECT id FROM builds WHERE name LIKE 'Top Build Hero %'");
+    while ($row = $res->fetch_assoc()) $dummy_ids[] = $row['id'];
+    if ($dummy_ids) {
+        $in = implode(',', $dummy_ids);
+        $conn->query("DELETE FROM build_items WHERE build_id IN ($in)");
+        $conn->query("DELETE FROM build_likes WHERE build_id IN ($in)");
+        $conn->query("DELETE FROM build_emblems WHERE build_id IN ($in)"); // jika tabel ini ada
+        $conn->query("DELETE FROM builds WHERE id IN ($in)");
+        $delete_message = '<div class="alert alert-success">Semua build dummy berhasil dihapus.</div>';
+    } else {
+        $delete_message = '<div class="alert alert-info">Tidak ada build dummy yang ditemukan.</div>';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +110,11 @@ if (isset($_POST['delete_build_id'])) {
             <div class="content-body">
                 <div class="builds-table-container">
                     <a href="add_build.php" class="btn btn-add">+ Add Official Build</a>
+                    <div style="margin-bottom:16px;">
+                        <form method="post" style="display:inline;">
+                            <button type="submit" name="delete_all_dummy" class="btn btn-delete" onclick="return confirm('Hapus semua build dummy?')">Hapus Semua Build Dummy</button>
+                        </form>
+                    </div>
                     <form method="get" class="filter-bar">
                         <label for="hero_id">Filter by Hero:</label>
                         <select name="hero_id" id="hero_id" onchange="this.form.submit()">

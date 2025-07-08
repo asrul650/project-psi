@@ -895,8 +895,8 @@ $emblemsData = [
                     ${itemsHtml}
                 </div>
                 <div class="build-actions">
-                    <button class="build-action-btn" onclick="toggleLikeAjax(${build.id}, '${type}', this)">
-                        <i class="fas fa-heart"></i> <span>${build.likes || 0}</span>
+                    <button class="build-action-btn${build.liked ? ' liked' : ''}" onclick="toggleLikeAjax(${build.id}, '${type}', this)">
+                        <i class="fas fa-heart"></i> <span>${build.like_count || 0}</span>
                     </button>
                 </div>
                 <div class="build-stats">
@@ -1036,16 +1036,8 @@ $emblemsData = [
                 alert('Gagal like/unlike: ' + (data.error || 'Unknown error'));
                 return;
             }
-            // Update UI
-            let countSpan = btn.querySelector('span');
-            let count = parseInt(countSpan.textContent);
-            if (liked) {
-                btn.classList.remove('liked');
-                countSpan.textContent = count - 1;
-            } else {
-                btn.classList.add('liked');
-                countSpan.textContent = count + 1;
-            }
+            // Setelah sukses, reload data build agar jumlah like update dari backend
+            loadBuildsAjax(currentHeroId, currentHeroData.heroName, currentHeroData.heroRole, currentHeroData.heroLane, currentHeroData.heroTier, currentHeroData.heroImage);
         })
         .catch(() => alert('Gagal like/unlike build.'));
     }
