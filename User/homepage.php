@@ -12,7 +12,8 @@ if (!isset($_SESSION['user_id_user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Legends Guide - Home User</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="stylesheet" href="../css/herocard.css">
+    <!--<link rel="stylesheet" href="../css/homepage.css">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
     body {
@@ -172,7 +173,7 @@ if (!isset($_SESSION['user_id_user'])) {
     <section class="hero-spotlight">
         <h3>Pahlawan Unggulan</h3>
         <div class="spotlight-grid">
-            <div class="spotlight-card">
+            <!--  <div class="spotlight-card">
                 <div class="spotlight-img-wrap">
                     <img src="../images/HERO/Fighter/Kalea/kalea.png" alt="Kalea">
                     <div class="spotlight-info">
@@ -204,7 +205,54 @@ if (!isset($_SESSION['user_id_user'])) {
                         <a href="detailhero.php?id=3" class="btn-detail">Lihat Detail</a>
                     </div>
                 </div>
+            </div>  -->
+
+            <div class="hero-card">
+            <img src="../images/HERO/Fighter/Kalea/kalea.png" alt="Kalea" class="hero-image">
+            <div class="hero-overlay">
+                <div class="hero-header">
+                    <h2 class="hero-name">Kalea</h2>
+                    <span class="hero-role">Support / Fighter</span>
+                </div>
+                <p class="hero-description">
+                   Support/Fighter yang sedang naik daun di meta terbaru! Memiliki kemampuan heal dan crowd control yang kuat.
+                </p>
+                <a href="detailhero.php?id=1" class="hero-detail-link">
+                    Lihat detail hero >>
+                </a>
             </div>
+        </div>
+        <div class="hero-card">
+            <img src="../images/HERO/Mage/Lunox/lunoxx.png" alt="Lunox" class="hero-image">
+            <div class="hero-overlay">
+                <div class="hero-header">
+                    <h2 class="hero-name">Lunox</h2>
+                    <span class="hero-role">Mage</span>
+                </div>
+                <p class="hero-description">
+                Mage spesialis burst damage dan fleksibilitas mode cahaya/gelap, sangat efektif di mid lane.
+                </p>
+                <a href="detailhero.php?id=2" class="hero-detail-link">
+                    Lihat detail hero >>
+                </a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <img src="../images/HERO/Support/Diggie/Diggie.png" alt="Diggie" class="hero-image">
+            <div class="hero-overlay">
+                <div class="hero-header">
+                    <h2 class="hero-name">Diggie</h2>
+                    <span class="hero-role">Support</span>
+                </div>
+                <p class="hero-description">
+                   Support spesialis anti crowd control, sangat efektif melindungi tim dari efek stun dan lock musuh.
+                </p>
+                <a href="detailhero.php?id=3" class="hero-detail-link">
+                    Lihat detail hero >>
+                </a>
+            </div>
+        </div>
+
         </div>
     </section>
 

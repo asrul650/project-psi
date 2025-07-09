@@ -12,6 +12,7 @@ if (isset($_SESSION['user_id_user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Legends Guide - Your Ultimate Companion</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/herocard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -63,31 +64,51 @@ if (isset($_SESSION['user_id_user'])) {
         </section>
 
         <!-- News Section -->
-        <section class="news-section" id="news" style="background:var(--bg-dark);color:var(--light-text);padding:60px 0 40px 0;">
-            <h2 style="text-align:center;font-size:2.5rem;margin-bottom:40px;">Berita Terbaru</h2>
-            <div class="feature-grid" style="text-align:center;grid-template-columns:repeat(4, 1fr);gap:32px;">
-                <div class="feature-item" style="background:rgba(34,34,40,0.7);backdrop-filter:blur(4px);">
-                    <div style="font-size:2.2rem;margin-bottom:10px;"><i class="fas fa-bolt"></i></div>
-                    <h4>Patch 1.8.90: Buff & Nerf Terbaru!</h4>
-                    <p>Moonton resmi merilis patch baru: hero X di-buff, hero Y di-nerf, dan item Z diubah. <br><a href="#" style="color:var(--secondary-color);font-weight:bold;">Baca selengkapnya</a></p>
-                </div>
-                <div class="feature-item" style="background:rgba(34,34,40,0.7);backdrop-filter:blur(4px);">
-                    <div style="font-size:2.2rem;margin-bottom:10px;"><i class="fas fa-gift"></i></div>
-                    <h4>Event Ramadan: Skin Gratis & Hadiah Menarik</h4>
-                    <p>Login setiap hari selama event Ramadan dan dapatkan skin gratis serta hadiah eksklusif lainnya! <br><a href="#" style="color:var(--secondary-color);font-weight:bold;">Cek detail event</a></p>
-                </div>
-                <div class="feature-item" style="background:rgba(34,34,40,0.7);backdrop-filter:blur(4px);">
-                    <div style="font-size:2.2rem;margin-bottom:10px;"><i class="fas fa-fire"></i></div>
-                    <h4>Kolaborasi MLBB x Naruto Resmi Dimulai!</h4>
-                    <p>Skin kolaborasi MLBB x Naruto sudah hadir! Dapatkan skin spesial Naruto, Sasuke, dan Sakura di shop.<br><a href="#" style="color:var(--secondary-color);font-weight:bold;">Lihat info kolaborasi</a></p>
-                </div>
-                <div class="feature-item" style="background:rgba(34,34,40,0.7);backdrop-filter:blur(4px);">
-                    <div style="font-size:2.2rem;margin-bottom:10px;"><i class="fas fa-trophy"></i></div>
-                    <h4>M5 World Championship: Siapa Jagoanmu?</h4>
-                    <p>Turnamen MLBB terbesar tahun ini telah dimulai! Saksikan tim favoritmu bertanding memperebutkan gelar juara dunia.<br><a href="#" style="color:var(--secondary-color);font-weight:bold;">Jadwal & hasil pertandingan</a></p>
-                </div>
-            </div>
-        </section>
+<section class="news-section" id="news" style="background:var(--bg-dark);color:var(--light-text);padding:80px 0;">
+    <h2 style="text-align:center;font-size:2.8rem;margin-bottom:50px;text-transform:uppercase;letter-spacing:1px;">Berita Terbaru</h2>
+    <div class="feature-grid" style="display:grid;text-align:center;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:40px;max-width:1400px;margin:0 auto;padding:0 30px;">
+        <div class="feature-item" style="background:rgba(34,34,40,0.8);backdrop-filter:blur(6px);padding:35px;border-radius:15px;box-shadow:0 10px 20px rgba(0,0,0,0.3);transition:all 0.3s ease;border:1px solid rgba(255,255,255,0.1);">
+            <div style="font-size:3rem;margin-bottom:20px;color:var(--secondary-color);"><i class="fas fa-bolt"></i></div>
+            <h4 style="font-size:1.5rem;margin-bottom:20px;line-height:1.3;">Patch 1.8.90: Buff & Nerf Terbaru!</h4>
+            <p style="font-size:1.1rem;line-height:1.6;margin-bottom:25px;color:rgba(255,255,255,0.9);">
+                Moonton resmi merilis patch baru: hero X di-buff, hero Y di-nerf, dan item Z diubah dengan perubahan signifikan pada gameplay.
+            </p>
+            <a href="#" style="color:var(--secondary-color);font-weight:bold;font-size:1.1rem;text-decoration:none;display:inline-block;padding:8px 0;border-bottom:2px solid var(--secondary-color);">
+                Baca selengkapnya <span style="margin-left:8px;">→</span>
+            </a>
+        </div>
+        <div class="feature-item" style="background:rgba(34,34,40,0.8);backdrop-filter:blur(6px);padding:35px;border-radius:15px;box-shadow:0 10px 20px rgba(0,0,0,0.3);transition:all 0.3s ease;border:1px solid rgba(255,255,255,0.1);">
+            <div style="font-size:3rem;margin-bottom:20px;color:var(--secondary-color);"><i class="fas fa-gift"></i></div>
+            <h4 style="font-size:1.5rem;margin-bottom:20px;line-height:1.3;">Event Ramadan: Skin Gratis & Hadiah Menarik</h4>
+            <p style="font-size:1.1rem;line-height:1.6;margin-bottom:25px;color:rgba(255,255,255,0.9);">
+                Login setiap hari selama event Ramadan dan dapatkan skin gratis serta hadiah eksklusif lainnya termasuk avatar limited edition!
+            </p>
+            <a href="#" style="color:var(--secondary-color);font-weight:bold;font-size:1.1rem;text-decoration:none;display:inline-block;padding:8px 0;border-bottom:2px solid var(--secondary-color);">
+                Cek detail event <span style="margin-left:8px;">→</span>
+            </a>
+        </div>
+        <div class="feature-item" style="background:rgba(34,34,40,0.8);backdrop-filter:blur(6px);padding:35px;border-radius:15px;box-shadow:0 10px 20px rgba(0,0,0,0.3);transition:all 0.3s ease;border:1px solid rgba(255,255,255,0.1);">
+            <div style="font-size:3rem;margin-bottom:20px;color:var(--secondary-color);"><i class="fas fa-fire"></i></div>
+            <h4 style="font-size:1.5rem;margin-bottom:20px;line-height:1.3;">Kolaborasi MLBB x Naruto Resmi Dimulai!</h4>
+            <p style="font-size:1.1rem;line-height:1.6;margin-bottom:25px;color:rgba(255,255,255,0.9);">
+                Skin kolaborasi MLBB x Naruto sudah hadir! Dapatkan skin spesial Naruto, Sasuke, dan Sakura dengan efek skill eksklusif.
+            </p>
+            <a href="#" style="color:var(--secondary-color);font-weight:bold;font-size:1.1rem;text-decoration:none;display:inline-block;padding:8px 0;border-bottom:2px solid var(--secondary-color);">
+                Lihat info kolaborasi <span style="margin-left:8px;">→</span>
+            </a>
+        </div>
+        <div class="feature-item" style="background:rgba(34,34,40,0.8);backdrop-filter:blur(6px);padding:35px;border-radius:15px;box-shadow:0 10px 20px rgba(0,0,0,0.3);transition:all 0.3s ease;border:1px solid rgba(255,255,255,0.1);">
+            <div style="font-size:3rem;margin-bottom:20px;color:var(--secondary-color);"><i class="fas fa-trophy"></i></div>
+            <h4 style="font-size:1.5rem;margin-bottom:20px;line-height:1.3;">M5 World Championship: Siapa Jagoanmu?</h4>
+            <p style="font-size:1.1rem;line-height:1.6;margin-bottom:25px;color:rgba(255,255,255,0.9);">
+                Turnamen MLBB terbesar tahun ini telah dimulai! Saksikan tim favoritmu bertanding memperebutkan gelar juara dunia dengan total hadiah $2 juta.
+            </p>
+            <a href="#" style="color:var(--secondary-color);font-weight:bold;font-size:1.1rem;text-decoration:none;display:inline-block;padding:8px 0;border-bottom:2px solid var(--secondary-color);">
+                Jadwal & hasil pertandingan <span style="margin-left:8px;">→</span>
+            </a>
+        </div>
+    </div>
+</section>
 
         <style>
         .spotlight-card {
@@ -148,8 +169,8 @@ if (isset($_SESSION['user_id_user'])) {
 
         <section class="hero-spotlight" id="spotlight">
             <h3>Pahlawan Unggulan</h3>
-            <div class="spotlight-grid">
-                <div class="spotlight-card">
+            <<div class="spotlight-grid">
+                <!--  <div class="spotlight-card">
                     <div class="spotlight-img-wrap">
                         <img src="images/HERO/Fighter/Kalea/kalea.png" alt="Kalea">
                         <div class="spotlight-info">
@@ -178,7 +199,52 @@ if (isset($_SESSION['user_id_user'])) {
                             <a href="includes/auth.php" class="btn-detail">Lihat Detail</a>
                         </div>
                     </div>
+                </div>  -->
+            <div class="hero-card">
+            <img src="images/HERO/Fighter/Kalea/kalea.png" alt="Zetian" class="hero-image">
+            <div class="hero-overlay">
+                <div class="hero-header">
+                    <h2 class="hero-name">Kalea</h2>
+                    <span class="hero-role">Support / Fighter</span>
                 </div>
+                <p class="hero-description">
+                   Support/Fighter yang sedang naik daun di meta terbaru! Memiliki kemampuan heal dan crowd control yang kuat.
+                </p>
+                <a href="includes/auth.php" class="hero-detail-link">
+                    Lihat detail hero >>
+                </a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <img src="images/HERO/Mage/Lunox/lunoxx.png" alt="Zetian" class="hero-image">
+            <div class="hero-overlay">
+                <div class="hero-header">
+                    <h2 class="hero-name">Lunox</h2>
+                    <span class="hero-role">Mage</span>
+                </div>
+                <p class="hero-description">
+                Mage spesialis burst damage dan fleksibilitas mode cahaya/gelap, sangat efektif di mid lane.
+                </p>
+                <a href="includes/auth.php" class="hero-detail-link">
+                    Lihat detail hero >>
+                </a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <img src="images/HERO/Support/Diggie/Diggie.png" alt="Zetian" class="hero-image">
+            <div class="hero-overlay">
+                <div class="hero-header">
+                    <h2 class="hero-name">Diggie</h2>
+                    <span class="hero-role">Support</span>
+                </div>
+                <p class="hero-description">
+                   Support spesialis anti crowd control, sangat efektif melindungi tim dari efek stun dan lock musuh.
+                </p>
+                <a href="includes/auth.php" class="hero-detail-link">
+                    Lihat detail hero >>
+                </a>
+            </div>
+        </div>
             </div>
         </section>
     </main>
