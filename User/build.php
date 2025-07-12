@@ -148,7 +148,7 @@ $emblemsData = [
             margin-bottom: 0;
         }
         .build-filter-btn.active, .build-filter-btn:hover {
-            background: linear-gradient(90deg, #ffe600 60%, #7B1FA2 100%);
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
             color: #23283a;
             border: 2px solid #ffe600;
         }
