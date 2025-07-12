@@ -44,19 +44,19 @@ $filtered_heroes = $filter === 'Semua' ? $heroes : array_filter($heroes, functio
         }
         .hero-filter-bar .filter-btn {
             background: linear-gradient(90deg, #23283a 60%, #181c24 100%);
-            border: 2px solid #2c2c2c;
+            border: 2px solid #ffd700;
             color: #ffeb3b;
             font-size: 1.1rem;
             font-weight: 700;
             padding: 10px 28px;
-            border-radius: 10px 10px 0 0;
+            border-radius: 24px;
             cursor: pointer;
             transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             letter-spacing: 1px;
         }
         .hero-filter-bar .filter-btn.active {
-            background: linear-gradient(90deg, #7B1FA2 60%, #FFEB3B 100%);
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
             color: #23283a;
             border: 2px solid #FFEB3B;
             box-shadow: 0 4px 16px rgba(123,31,162,0.15);
@@ -161,7 +161,13 @@ $filtered_heroes = $filter === 'Semua' ? $heroes : array_filter($heroes, functio
             </ul>
         </nav>
     </header>
-    <main style="background:#181c24;min-height:100vh;">
+    <main style="background:#181c24;min-height:100vh;padding-top:30px;">
+        <div style="display:flex;justify-content:center;margin-bottom:10px;">
+            <div style="position:relative;max-width:420px;width:100%;">
+                <input type="text" id="search-hero" placeholder="Search heroes..." style="width:100%;padding:12px 18px 12px 45px;border-radius:24px;border:2px solid #2c2c2c;background:#23283a;color:#ffffff;font-size:1.1rem;outline:none;box-shadow:0 2px 8px #ffe60022;">
+                <span style="position:absolute;left:20px;top:50%;transform:translateY(-50%);color:#ffe600;font-size:1.2em;"><i class="fas fa-search"></i></span>
+            </div>
+        </div>
         <div class="hero-filter-bar">
             <?php foreach ($roles as $role): ?>
                 <form method="get" style="display:inline;">
@@ -170,12 +176,7 @@ $filtered_heroes = $filter === 'Semua' ? $heroes : array_filter($heroes, functio
                 </form>
             <?php endforeach; ?>
         </div>
-        <div style="display:flex;justify-content:center;margin-bottom:24px;">
-            <div style="position:relative;max-width:420px;width:100%;">
-                <input type="text" id="search-hero" placeholder="Search heroes..." style="width:100%;padding:12px 18px 12px 38px;border-radius:24px;border:2px solid #ffe600;background:#23283a;color:#ffe600;font-size:1.1rem;outline:none;box-shadow:0 2px 8px #ffe60022;">
-                <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#ffe600;font-size:1.2em;"><i class="fas fa-search"></i></span>
-            </div>
-        </div>
+       
         <div class="hero-list-grid" id="hero-list-grid">
             <?php if (count($filtered_heroes) > 0): ?>
                 <?php foreach ($filtered_heroes as $hero): ?>

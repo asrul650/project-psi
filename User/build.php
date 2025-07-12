@@ -113,12 +113,12 @@ $emblemsData = [
     <style>
         body { background: #181c24; }
         .build-title {
-            color: #ffe600;
+            color: #ffffff;
             text-align: center;
             font-size: 1.5rem;
             font-weight: bold;
-            margin-top: 32px;
-            margin-bottom: 8px;
+            margin-top: 25px;
+            margin-bottom: 15px;
             letter-spacing: 2px;
             text-shadow: 0 2px 12px #232b4a99;
         }
@@ -133,7 +133,7 @@ $emblemsData = [
             justify-content: center;
             align-items: center;
             gap: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 30px;
         }
         .build-filter-btn {
             background: none;
@@ -164,18 +164,18 @@ $emblemsData = [
         }
         .build-search-box input {
             width: 100%;
-            padding: 12px 18px 12px 38px;
+            padding: 12px 18px 12px 45px;
             border-radius: 24px;
-            border: 2px solid #ffe600;
+            border: 2px solid #2c2c2c;
             background: #23283a;
-            color: #ffe600;
+            color: #ffffff;
             font-size: 1.1rem;
             outline: none;
             box-shadow: 0 2px 8px #ffe60022;
         }
         .build-search-box .fa-search {
             position: absolute;
-            left: 12px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
             color: #ffe600;
